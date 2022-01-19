@@ -1,5 +1,5 @@
 module "wellcomelibrary-prod" {
-  source = "./cloudfront_distro"
+  source = "./modules/cloudfront_distro"
 
   distro_alternative_names = [
     "wellcomelibrary.org",
@@ -20,7 +20,7 @@ module "wellcomelibrary-prod" {
 }
 
 module "wellcomelibrary-stage" {
-  source = "./cloudfront_distro"
+  source = "./modules/cloudfront_distro"
 
   distro_alternative_names = [
     "stage.wellcomelibrary.org",

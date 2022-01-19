@@ -1,7 +1,7 @@
 // DServe links (archives.wellcomelibrary.org)
 
 module "wellcomelibrary_dserve-prod" {
-  source = "./cloudfront_distro"
+  source = "./modules/cloudfront_distro"
 
   distro_alternative_names = [
     "archives.wellcomelibrary.org"
@@ -22,7 +22,7 @@ module "wellcomelibrary_dserve-prod" {
 }
 
 module "wellcomelibrary_dserve-stage" {
-  source = "./cloudfront_distro"
+  source = "./modules/cloudfront_distro"
 
   distro_alternative_names = [
     "archives.stage.wellcomelibrary.org"
