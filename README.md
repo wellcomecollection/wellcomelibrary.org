@@ -24,14 +24,14 @@ It includes the code for redirecting users from the old site to the appropriate 
     We redirect requests to the Works pages on the new website.
     
     <a href="screenshots/archives.wl.org-screenshot.png">
-      <img src="screenshot/archives.wl.org-thumbnail.png" alt="Screenshot of archives.wellcomelibrary.org">
+      <img src="screenshots/archives.wl.org-thumbnail.png" alt="Screenshot of archives.wellcomelibrary.org">
     </a>
 
 *   `blog.wellcomelibrary.org` was the Wellcome Library blog.
     It's been backed up in the Wayback Machine by the Internet Archive, and we redirect requests to the archived version.
 
     <a href="screenshots/blog.wl.org-screenshot.png">
-      <img src="screenshot/blog.wl.org-thumbnail.png" alt="Screenshot of blog.wellcomelibrary.org">
+      <img src="screenshots/blog.wl.org-thumbnail.png" alt="Screenshot of blog.wellcomelibrary.org">
     </a>
 
 *   `search.wellcomelibrary.org` was a web front-end for the library catalogue/Sierra, powered by an application called Encore.
@@ -41,14 +41,14 @@ It includes the code for redirecting users from the old site to the appropriate 
     Encore was also available at `wellcomelibrary.org` (no subdomain).
 
     <a href="screenshots/search.wl.org-screenshot.png">
-      <img src="screenshot/search.wl.org-thumbnail.png" alt="Screenshot of search.wellcomelibrary.org">
+      <img src="screenshots/search.wl.org-thumbnail.png" alt="Screenshot of search.wellcomelibrary.org">
     </a>
 
 *   `catalogue.wellcomelibrary.org` was another web front-end for the library catalogue/Sierra, often referred to as the OPAC ([online public access catalogue][opac]) or WebPAC.
     As of January 2022, we are not redirecting OPAC URLs, and we have no immediate plans to do so.
 
     <a href="screenshots/catalogue.wl.org-screenshot.png">
-      <img src="screenshot/catalogue.wl.org-thumbnail.png" alt="Screenshot of catalogue.wellcomelibrary.org">
+      <img src="screenshots/catalogue.wl.org-thumbnail.png" alt="Screenshot of catalogue.wellcomelibrary.org">
     </a>
 
 *   `wellcomelibrary.org/iiif` and other paths (e.g. `/service/alto`) were IIIF services, including a IIIF Image API and IIIF presentation API.
