@@ -1,4 +1,4 @@
-# Platform Infrastructure
+# wellcomelibrary.org
 
 [![Repo tests](https://img.shields.io/buildkite/31ad44a1e6bd7a592d4d21e7171f44962e52abe2cf7a6f8c3b/main.svg?label=repo%20tests)](https://buildkite.com/wellcomecollection/wellcome-library-repo-tests)
 
