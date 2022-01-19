@@ -1,6 +1,6 @@
 # wellcomelibrary.org
 
-[![Repo tests](https://img.shields.io/buildkite/31ad44a1e6bd7a592d4d21e7171f44962e52abe2cf7a6f8c3b/main.svg?label=repo%20tests)](https://buildkite.com/wellcomecollection/wellcome-library-repo-tests)
+[![Repo tests](https://img.shields.io/buildkite/31ad44a1e6bd7a592d4d21e7171f44962e52abe2cf7a6f8c3b/main.svg?label=repo%20tests)](https://buildkite.com/wellcomecollection/wellcome-library-repo-tests) [![Repo tests](https://img.shields.io/buildkite/a227d606a40aacf257533d40481f74f5ac1335ffa6477873ee/main.svg?label=redirects)](https://buildkite.com/wellcomecollection/wellcome-library-redirects)
 
 This is the CloudFront distribution for the old `wellcomelibrary.org` website.
 It includes the code for redirecting users from the old site to the appropriate `wellcomecollection.org` URL.
