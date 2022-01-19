@@ -4,7 +4,7 @@ steps:
       - ecr#v2.1.1:
           login: true
       - docker-compose#v3.5.0:
-          run: wellcome_library_edge_lambdas
+          run: edge_lambda
           command: ["yarn", "testRedirectsStage"]
     retry:
       automatic: true
@@ -14,7 +14,7 @@ steps:
       - ecr#v2.1.1:
           login: true
       - docker-compose#v3.5.0:
-          run: wellcome_library_edge_lambdas
+          run: edge_lambda
           command: ["yarn", "testRedirects"]
     retry:
       automatic: true
