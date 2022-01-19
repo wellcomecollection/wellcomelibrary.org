@@ -22,7 +22,7 @@ It includes the code for redirecting users from the old site to the appropriate 
 
 *   `archives.wellcomelibrary.org` was a web front-end for the archive catalogue/CALM, powered by an application called DServe.
     We redirect requests to the Works pages on the new website.
-    
+
     <a href="screenshots/archives.wl.org-screenshot.png">
       <img src="screenshots/archives.wl.org-thumbnail.png" alt="Screenshot of archives.wellcomelibrary.org">
     </a>
@@ -58,5 +58,6 @@ It includes the code for redirecting users from the old site to the appropriate 
 
 ## How to
 
+*   [Add a static redirect to wellcomelibrary.org](docs/add-static-redirect.md)
 *   [Get to the Route 53 Hosted Zone in the AWS Console](docs/route53-hosted-zone.md)
 *   [Deploy a new version of the redirection Lambdas](docs/deploy-redirect-lambda.md)
