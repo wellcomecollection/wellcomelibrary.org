@@ -9,7 +9,7 @@ steps:
       - ecr#v2.1.1:
           login: true
       - docker-compose#v3.5.0:
-          run: wellcome_library_edge_lambdas
+          run: edge_lambda
           command: ["yarn", "test"]
 
   - wait
@@ -20,5 +20,5 @@ steps:
       - ecr#v2.1.1:
           login: true
       - docker-compose#v3.5.0:
-          run: wellcome_library_edge_lambdas
+          run: edge_lambda
           command: ["yarn", "uploadToS3"]
