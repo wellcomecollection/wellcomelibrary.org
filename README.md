@@ -20,20 +20,22 @@ It includes the code for redirecting users from the old site to the appropriate 
 
 ## Key subdomains/services
 
+*   `archives.wellcomelibrary.org` was a web front-end for the archive catalogue/CALM, powered by an application called DServe.
+    We redirect requests to the Works pages on the new website.
+
 *   `blog.wellcomelibrary.org` was the Wellcome Library blog.
     It's been backed up in the Wayback Machine by the Internet Archive, and we redirect requests to the archived version.
 
-*   Encore was a web front-end for the library catalogue/Sierra, available at both `search.wellcomelibrary.org` and `wellcomelibrary.org` (no subdomain).
+*   `search.wellcomelibrary.org` was a web front-end for the library catalogue/Sierra, powered by an application called Encore.
     As of January 2022, we are not redirecting Encore URLs.
     We will eventually redirect requests to the Works pages on the new website.
 
-*   The OPAC ([online public access catalogue][opac]) was another web front-end for the library catalogue/Sierra, available at `catalogue.wellcomelibrary.org`.
+    Encore was also available at `wellcomelibrary.org` (no subdomain).
+
+*   `catalogue.wellcomelibrary.org` was another web front-end for the library catalogue/Sierra, often referred to as the OPAC ([online public access catalogue][opac]) or WebPAC.
     As of January 2022, we are not redirecting OPAC URLs, and we have no immediate plans to do so.
 
-*   DServe was a web front-end for the archive catalogue/CALM, available at `archives.wellcomelibrary.org`.
-    We redirect requests to the Works pages on the new website.
-
-*   IIIF services including a IIIF Image API and IIIF presentation API were hosted on various paths under the old site, including `wl.org/iiif` and `wl.org/service/alto`.
+*   `wellcomelibrary.org/iiif` and other paths (e.g. `/service/alto`) were IIIF services, including a IIIF Image API and IIIF presentation API.
     These services are now served from `iiif.wc.org`, and we redirect any requests for the old URLs to the new URLs.
 
 [opac]: https://en.wikipedia.org/wiki/Online_public_access_catalog
@@ -42,4 +44,3 @@ It includes the code for redirecting users from the old site to the appropriate 
 
 *   [Get to the Route 53 Hosted Zone in the AWS Console](docs/route53-hosted-zone.md)
 *   [Deploy a new version of the redirection Lambdas](docs/deploy-redirect-lambda.md)
-
