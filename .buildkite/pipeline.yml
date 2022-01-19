@@ -12,6 +12,8 @@ steps:
           run: wellcome_library_edge_lambdas
           command: ["yarn", "test"]
 
+  - wait
+
   - label: "upload redirection Lambda to S3"
     branches: "main"
     plugins:
