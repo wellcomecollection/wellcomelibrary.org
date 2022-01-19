@@ -1,7 +1,7 @@
 // Encore links (search.wellcomelibrary.org)
 
 //module "wellcomelibrary_encore-prod" {
-//  source = "./cloudfront_distro"
+//  source = "./modules/cloudfront_distro"
 //
 //  distro_alternative_names = [
 //    "archives.wellcomelibrary.org"
@@ -21,7 +21,7 @@
 //}
 //
 module "wellcomelibrary_encore-stage" {
-  source = "./cloudfront_distro"
+  source = "./modules/cloudfront_distro"
 
   distro_alternative_names = [
     "search.stage.wellcomelibrary.org"

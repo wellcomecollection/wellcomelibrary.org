@@ -1,7 +1,7 @@
 // OPAC links (catalogue.wellcomelibrary.org)
 
 //module "wellcomelibrary_opac-prod" {
-//  source = "./cloudfront_distro"
+//  source = "./modules/cloudfront_distro"
 //
 //  distro_alternative_names = [
 //    "catalogue.wellcomelibrary.org"
@@ -21,7 +21,7 @@
 //}
 //
 module "wellcomelibrary_opac-stage" {
-  source = "./cloudfront_distro"
+  source = "./modules/cloudfront_distro"
 
   distro_alternative_names = [
     "catalogue.stage.wellcomelibrary.org"

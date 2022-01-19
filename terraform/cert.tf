@@ -1,5 +1,5 @@
 module "cert" {
-  source = "../../modules/certificate"
+  source = "./modules/certificate"
 
   domain_name = "wellcomelibrary.org"
 
@@ -14,7 +14,7 @@ module "cert" {
 }
 
 module "cert-stage" {
-  source = "../../modules/certificate"
+  source = "./modules/certificate"
 
   domain_name = "stage.wellcomelibrary.org"
 
