@@ -14,8 +14,10 @@ docker run --tty --rm \
 # If there are any changes, push to GitHub immediately and fail the
 # build.  This will abort the remaining jobs, and trigger a new build
 # with the reformatted code.
-has_changes=0
-git diff --exit-code || rc=$?
+set +o errexit
+git diff --exit-code
+has_changes=$?
+set -o errexit
 
 if (( has_changes == 0 ))
 then
