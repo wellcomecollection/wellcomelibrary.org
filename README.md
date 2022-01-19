@@ -1,6 +1,6 @@
 # Platform Infrastructure
 
-[![Build status](https://badge.buildkite.com/77ed104b8415c0879a234231e0fa3eebde5adf34f434b9ba9a.svg?branch=master)](https://buildkite.com/wellcomecollection/platform-infrastructure)
+[![Repo tests](https://img.shields.io/buildkite/31ad44a1e6bd7a592d4d21e7171f44962e52abe2cf7a6f8c3b/main.svg?label=repo%20tests)](https://buildkite.com/wellcomecollection/wellcome-library-repo-tests)
 
 Wellcome Collection common infrastructure.
 
