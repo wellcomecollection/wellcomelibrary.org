@@ -1,7 +1,6 @@
+edge-lambda/*.zip
 .DS_Store
-.releases
 *.plan
-*.pyc
 
 # Created by https://www.gitignore.io/api/terraform
 # Edit at https://www.gitignore.io/?templates=terraform
