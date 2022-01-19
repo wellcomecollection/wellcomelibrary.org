@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- encoding: utf-8
 """
 This script does autoformatting in Buildkite on pull requests.
 
@@ -31,15 +30,6 @@ if __name__ == "__main__":
         shell=True,
     )
 
-    subprocess.check_call(
-        f"""
-        docker run --tty --rm \
-            --volume {root}:/repo \
-            760097843905.dkr.ecr.eu-west-1.amazonaws.com/wellcome/format_python:112
-    """.strip(),
-        shell=True,
-    )
-
     # If there are any changes, push to GitHub immediately and fail the
     # build.  This will abort the remaining jobs, and trigger a new build
     # with the reformatted code.
@@ -64,17 +54,3 @@ if __name__ == "__main__":
         sys.exit(1)
     else:
         print("*** There were no changes from auto-formatting")
-
-    # Run the 'lint' tasks.  A failure in these tasks requires
-    # manual intervention, so we run them second to get any automatic fixes
-    # out of the way.
-    subprocess.check_call(
-        f"""
-        docker run --tty --rm \
-            --volume {root}:/repo \
-            --workdir /repo \
-            760097843905.dkr.ecr.eu-west-1.amazonaws.com/wellcome/flake8:latest \
-            --exclude .git,__pycache__,target,.terraform --ignore=E501,E122,E126,E203,W503
-    """.strip(),
-        shell=True,
-    )
