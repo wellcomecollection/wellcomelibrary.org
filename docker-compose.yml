@@ -1,0 +1,5 @@
+version: '3.3'
+services:
+  wellcome_library_edge_lambdas:
+    build:
+      context: ./cloudfront/wellcomelibrary.org/edge-lambda
