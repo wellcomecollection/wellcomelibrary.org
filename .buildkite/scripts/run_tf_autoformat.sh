@@ -34,7 +34,7 @@ else
   git checkout --track "ssh-origin/$BUILDKITE_BRANCH"
 
   git add --verbose --update
-  git commit -m Apply auto-formatting rules
+  git commit -m "Apply auto-formatting rules"
   git push ssh-origin "HEAD:$BUILDKITE_BRANCH"
 
   # We exit here to fail the build, so Buildkite will skip to the next
