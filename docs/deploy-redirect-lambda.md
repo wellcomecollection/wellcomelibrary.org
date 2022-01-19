@@ -1,4 +1,4 @@
-# How to deploy a new version of the redirect Lambdas
+# How to deploy a new version of the redirection Lambda
 
 1.  Package and upload to S3 a ZIP for the Lambda definition
 

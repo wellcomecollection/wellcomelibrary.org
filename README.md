@@ -41,5 +41,5 @@ It includes the code for redirecting users from the old site to the appropriate 
 ## How to
 
 *   [Get to the Route 53 Hosted Zone in the AWS Console](docs/route53-hosted-zone.md)
-*   [Deploy a new version of the redirect Lambdas](docs/deploy-redirect-lambda.md)
+*   [Deploy a new version of the redirection Lambdas](docs/deploy-redirect-lambda.md)
 
