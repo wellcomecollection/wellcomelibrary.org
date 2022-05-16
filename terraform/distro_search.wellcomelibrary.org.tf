@@ -13,7 +13,7 @@ module "wellcomelibrary_encore-prod" {
   distro_alternative_names = [
     "search.wellcomelibrary.org"
   ]
-  acm_certificate_arn = module.cert-prod.arn
+  acm_certificate_arn = module.cert.arn
 
   origins = [{
     origin_id : "origin"
