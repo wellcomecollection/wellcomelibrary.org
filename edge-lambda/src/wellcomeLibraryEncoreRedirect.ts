@@ -3,7 +3,7 @@ import {
   CloudFrontRequest,
   CloudFrontResultResponse,
 } from 'aws-lambda/common/cloudfront';
-import { 
+import {
   getSierraIdentifierRedirect,
   wellcomeCollectionRedirect
 } from './redirectHelpers';
@@ -45,7 +45,7 @@ function parseEncorePathComponents(finalPathPart: string): EncorePathComponent[]
     .map(component => {
       const letter = component.substring(0, 1);
       const contents = component.substring(1, );
-      
+
       return {
         letter: letter,
         contents: contents.length > 0 ? contents : undefined,
@@ -60,7 +60,7 @@ export function getBnumberFromEncorePath(path: string): GetBNumberResult {
 
   const finalPathPart = path.split('/')[4];
   const components = parseEncorePathComponents(finalPathPart);
-  
+
   const sierraBibRegexp = /^b([0-9]{7})$/;
 
   // If defined, this will be something like '1234567'
@@ -94,7 +94,7 @@ function getSearchRedirect(
   if (!path.startsWith('/iii/encore/search')) {
     return Error(`Path ${path} does not start with /iii/encore/search`);
   }
-  
+
   // For URLs like /iii/encore/search?target=erythromelalgia&submit=Search
   if (qs['submit'] === 'Search' && qs['target']) {
     return wellcomeCollectionRedirect(`/works?query=${qs['target']}`)
@@ -140,12 +140,17 @@ export const requestHandler = async (
   // only have '/search' as the path and then put the search terms in the query string.
   const searchPathRegExp: RegExp = /^\/iii\/encore\/search.*/;
 
+  // URLs like https://search.wellcomelibrary.org/iii/encore/?lang=eng
+  const encoreHomepage = '/iii/encore/';
+
   if (path.match(bibPathRegExp)) {
     return getWorksRedirect(path);
   } else if (path.match(accountPathRegExp)) {
     return wellcomeCollectionRedirect('/account');
   } else if (path.match(searchPathRegExp)) {
     return getSearchRedirect(path, qs);
+  } else if (path === encoreHomepage) {
+    return wellcomeCollectionRedirect('/collections/');
   }
 
   // If we've matched nothing we redirect to the top-level collections page
