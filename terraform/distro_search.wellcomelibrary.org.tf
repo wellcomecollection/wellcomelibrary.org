@@ -52,9 +52,8 @@ module "wellcomelibrary_encore-stage" {
 resource "aws_route53_record" "encore-prod" {
   zone_id = data.aws_route53_zone.zone.id
   name    = "search.wellcomelibrary.org"
-  type    = "A"
-
-  records = [local.encore_ip_address]
+  type    = "CNAME"
+  records = [module.wellcomelibrary_encore-prod.distro_domain_name]
   ttl     = "300"
 
   provider = aws.dns
@@ -63,9 +62,8 @@ resource "aws_route53_record" "encore-prod" {
 resource "aws_route53_record" "encore-origin" {
   zone_id = data.aws_route53_zone.zone.id
   name    = "search.origin.wellcomelibrary.org"
-  type    = "A"
-
-  records = [local.encore_ip_address]
+  type    = "CNAME"
+  records = [module.wellcomelibrary_encore-prod.distro_domain_name]
   ttl     = "60"
 
   provider = aws.dns
