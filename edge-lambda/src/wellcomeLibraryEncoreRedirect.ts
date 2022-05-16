@@ -151,6 +151,8 @@ export const requestHandler = async (
     return getSearchRedirect(path, qs);
   } else if (path === encoreHomepage) {
     return wellcomeCollectionRedirect('/collections/');
+  } else if (path === '/robots.txt') {
+    return wellcomeCollectionRedirect('/robots.txt');
   }
 
   // If we've matched nothing we redirect to the top-level collections page

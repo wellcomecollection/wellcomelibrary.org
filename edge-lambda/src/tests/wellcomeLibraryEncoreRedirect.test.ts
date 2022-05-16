@@ -98,6 +98,13 @@ const encoreTests = [
       resolvedUri: 'https://wellcomecollection.org/works?query=rosalind%20paget'
     }
   ],
+  [
+    'robots.txt file',
+    {
+      path: '/robots.txt',
+      resolvedUri: 'https://wellcomecollection.org/robots.txt'
+    }
+  ],
 ] as [string, Test][];
 
 test.each(encoreTests)('%s', (name: string, test: Test) => {

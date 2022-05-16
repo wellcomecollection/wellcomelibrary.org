@@ -7,11 +7,11 @@
 
 locals {
   prod_lambda_function_versions = {
-    archive         = "39"
-    blog            = "56"
-    encore          = "36"
-    passthru        = "72"
-    wellcomelibrary = "91"
+    archive         = "40"
+    blog            = "57"
+    encore          = "37"
+    passthru        = "73"
+    wellcomelibrary = "92"
   }
 }
 
