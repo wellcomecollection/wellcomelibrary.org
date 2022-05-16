@@ -143,7 +143,6 @@ export const requestHandler = async (
   const searchPathRegExp: RegExp = /^\/iii\/encore\/search.*/;
 
   if (path.match(bibPathRegExp)) {
-    console.log(`@@AWLC bibPathRegExp = ${path}`);
     return getWorksRedirect(path);
   } else if (path.match(accountPathRegExp)) {
     return wellcomeCollectionRedirect('/account');
