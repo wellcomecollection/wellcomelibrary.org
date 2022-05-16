@@ -98,6 +98,23 @@ const encoreTests = [
       resolvedUri: 'https://wellcomecollection.org/works?query=rosalind%20paget'
     }
   ],
+  [
+    'robots.txt file',
+    {
+      path: '/robots.txt',
+      resolvedUri: 'https://wellcomecollection.org/robots.txt'
+    }
+  ],
+  [
+    'a mobile link to a bib record',
+    {
+      path: '/iii/mobile/record/C__Rb3215608',
+      results: results([
+        resultWithIdentifier('re32btrs', 'sierra-identifier', '3215608'),
+      ]),
+      resolvedUri: 'https://wellcomecollection.org/works/re32btrs'
+    }
+  ],
 ] as [string, Test][];
 
 test.each(encoreTests)('%s', (name: string, test: Test) => {

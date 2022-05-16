@@ -3,7 +3,7 @@ import {
   CloudFrontRequest,
   CloudFrontResultResponse,
 } from 'aws-lambda/common/cloudfront';
-import { 
+import {
   getSierraIdentifierRedirect,
   wellcomeCollectionRedirect
 } from './redirectHelpers';
@@ -45,7 +45,7 @@ function parseEncorePathComponents(finalPathPart: string): EncorePathComponent[]
     .map(component => {
       const letter = component.substring(0, 1);
       const contents = component.substring(1, );
-      
+
       return {
         letter: letter,
         contents: contents.length > 0 ? contents : undefined,
@@ -54,13 +54,13 @@ function parseEncorePathComponents(finalPathPart: string): EncorePathComponent[]
 }
 
 export function getBnumberFromEncorePath(path: string): GetBNumberResult {
-  if (!path.startsWith('/iii/encore/record/')) {
-    return Error(`Path ${path} does not start with /iii/encore/record/`);
+  if (!path.startsWith('/iii/encore/record/') && !path.startsWith('/iii/mobile/record/')) {
+    return Error(`Path ${path} does not start with /iii/encore/record/ or /iii/mobile/record/`);
   }
 
   const finalPathPart = path.split('/')[4];
   const components = parseEncorePathComponents(finalPathPart);
-  
+
   const sierraBibRegexp = /^b([0-9]{7})$/;
 
   // If defined, this will be something like '1234567'
@@ -94,7 +94,7 @@ function getSearchRedirect(
   if (!path.startsWith('/iii/encore/search')) {
     return Error(`Path ${path} does not start with /iii/encore/search`);
   }
-  
+
   // For URLs like /iii/encore/search?target=erythromelalgia&submit=Search
   if (qs['submit'] === 'Search' && qs['target']) {
     return wellcomeCollectionRedirect(`/works?query=${qs['target']}`)
@@ -128,8 +128,10 @@ export const requestHandler = async (
   const path = request.uri;
   const qs: querystring.ParsedUrlQuery = querystring.parse(request.querystring);
 
-  // URLs like https://search.wellcomelibrary.org/iii/encore/record/C__Rb2475299
-  const bibPathRegExp: RegExp = /^\/iii\/encore\/record\/C__Rb[0-9]{7}.*/;
+  // URLs like
+  // https://search.wellcomelibrary.org/iii/encore/record/C__Rb2475299
+  // http://search.wellcomelibrary.org/iii/mobile/record/C__Rb3215608?lang=eng
+  const bibPathRegExp: RegExp = /^\/iii\/(encore|mobile)\/record\/C__Rb[0-9]{7}.*/;
 
   // URLs like https://search.wellcomelibrary.org/iii/encore/myaccount?suite=cobalt&lang=eng
   const accountPathRegExp: RegExp = /^\/iii\/encore\/myaccount.*/;
@@ -146,6 +148,10 @@ export const requestHandler = async (
     return wellcomeCollectionRedirect('/account');
   } else if (path.match(searchPathRegExp)) {
     return getSearchRedirect(path, qs);
+  } else if (path === '/iii/encore/' || path === '/') {
+    return wellcomeCollectionRedirect('/collections/');
+  } else if (path === '/robots.txt') {
+    return wellcomeCollectionRedirect('/robots.txt');
   }
 
   // If we've matched nothing we redirect to the top-level collections page
