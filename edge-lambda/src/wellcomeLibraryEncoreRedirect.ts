@@ -54,8 +54,8 @@ function parseEncorePathComponents(finalPathPart: string): EncorePathComponent[]
 }
 
 export function getBnumberFromEncorePath(path: string): GetBNumberResult {
-  if (!path.startsWith('/iii/encore/record/')) {
-    return Error(`Path ${path} does not start with /iii/encore/record/`);
+  if (!path.startsWith('/iii/encore/record/') && !path.startsWith('/iii/mobile/record/')) {
+    return Error(`Path ${path} does not start with /iii/encore/record/ or /iii/mobile/record/`);
   }
 
   const finalPathPart = path.split('/')[4];
@@ -128,8 +128,10 @@ export const requestHandler = async (
   const path = request.uri;
   const qs: querystring.ParsedUrlQuery = querystring.parse(request.querystring);
 
-  // URLs like https://search.wellcomelibrary.org/iii/encore/record/C__Rb2475299
-  const bibPathRegExp: RegExp = /^\/iii\/encore\/record\/C__Rb[0-9]{7}.*/;
+  // URLs like
+  // https://search.wellcomelibrary.org/iii/encore/record/C__Rb2475299
+  // http://search.wellcomelibrary.org/iii/mobile/record/C__Rb3215608?lang=eng
+  const bibPathRegExp: RegExp = /^\/iii\/(encore|mobile)\/record\/C__Rb[0-9]{7}.*/;
 
   // URLs like https://search.wellcomelibrary.org/iii/encore/myaccount?suite=cobalt&lang=eng
   const accountPathRegExp: RegExp = /^\/iii\/encore\/myaccount.*/;
@@ -140,16 +142,14 @@ export const requestHandler = async (
   // only have '/search' as the path and then put the search terms in the query string.
   const searchPathRegExp: RegExp = /^\/iii\/encore\/search.*/;
 
-  // URLs like https://search.wellcomelibrary.org/iii/encore/?lang=eng
-  const encoreHomepage = '/iii/encore/';
-
   if (path.match(bibPathRegExp)) {
+    console.log(`@@AWLC bibPathRegExp = ${path}`);
     return getWorksRedirect(path);
   } else if (path.match(accountPathRegExp)) {
     return wellcomeCollectionRedirect('/account');
   } else if (path.match(searchPathRegExp)) {
     return getSearchRedirect(path, qs);
-  } else if (path === encoreHomepage) {
+  } else if (path === '/iii/encore/' || path === '/') {
     return wellcomeCollectionRedirect('/collections/');
   } else if (path === '/robots.txt') {
     return wellcomeCollectionRedirect('/robots.txt');
