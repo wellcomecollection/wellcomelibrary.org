@@ -1,5 +1,12 @@
 // Encore links (search.wellcomelibrary.org)
 
+locals {
+  # This is the IP address of Encore before we started redirecting it.
+  # Although Encore will eventually be decommissioned and this IP address
+  # will stop working, it's kept here for easy rollback if necessary.
+  encore_ip_address = "35.176.25.168"
+}
+
 module "wellcomelibrary_encore-prod" {
   source = "./modules/cloudfront_distro"
 
@@ -47,7 +54,7 @@ resource "aws_route53_record" "encore-prod" {
   name    = "search.wellcomelibrary.org"
   type    = "A"
 
-  records = ["35.176.25.168"]
+  records = [local.encore_ip_address]
   ttl     = "300"
 
   provider = aws.dns
@@ -58,7 +65,7 @@ resource "aws_route53_record" "encore-origin" {
   name    = "search.origin.wellcomelibrary.org"
   type    = "A"
 
-  records = ["35.176.25.168"]
+  records = [local.encore_ip_address]
   ttl     = "60"
 
   provider = aws.dns
