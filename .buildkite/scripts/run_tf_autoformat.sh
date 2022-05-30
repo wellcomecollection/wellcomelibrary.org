@@ -9,7 +9,7 @@ ROOT=$(git rev-parse --show-toplevel)
 docker run --tty --rm \
   --volume "$ROOT":/repo \
   --workdir /repo \
-  760097843905.dkr.ecr.eu-west-1.amazonaws.com/hashicorp/terraform:light fmt -recursive
+  public.ecr.aws/hashicorp/terraform:light fmt -recursive
 
 # If there are any changes, push to GitHub immediately and fail the
 # build.  This will abort the remaining jobs, and trigger a new build
