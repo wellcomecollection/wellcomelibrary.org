@@ -51,6 +51,13 @@ It includes the code for redirecting users from the old site to the appropriate 
       <img src="screenshots/catalogue.wl.org-thumbnail.png" alt="Screenshot of catalogue.wellcomelibrary.org">
     </a>
 
+*   `wellcomelibrary.org/moh` is a standalone application for browsing the Medical Officer of Health reports.
+    The associated GitHub repo is [wellcomecollection/londons-pulse](https://github.com/wellcomecollection/londons-pulse).
+
+    <a href="screenshots/moh-screenshot.png">
+      <img src="screenshots/moh-thumbnail.png" alt="Screenshot of wellcomelibrary.org/moh">
+    </a>
+
 *   `wellcomelibrary.org/iiif` and other paths (e.g. `/service/alto`) were IIIF services, including a IIIF Image API and IIIF presentation API.
     These services are now served from `iiif.wc.org`, and we redirect any requests for the old URLs to the new URLs.
 
