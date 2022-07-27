@@ -3,7 +3,7 @@ resource "aws_lambda_function" "wellcome_library_passthru" {
 
   function_name = "cf_edge_wellcome_library_passthru"
   role          = aws_iam_role.edge_lambda_role.arn
-  runtime       = "nodejs12.x"
+  runtime       = "nodejs16.x"
   handler       = "wellcomeLibraryPassthru.requestHandler"
   publish       = true
 
@@ -17,7 +17,7 @@ resource "aws_lambda_function" "wellcome_library_encore_redirect" {
 
   function_name = "cf_edge_wellcome_library_encore_redirect"
   role          = aws_iam_role.edge_lambda_role.arn
-  runtime       = "nodejs12.x"
+  runtime       = "nodejs16.x"
   handler       = "wellcomeLibraryEncoreRedirect.requestHandler"
   publish       = true
 
@@ -31,7 +31,7 @@ resource "aws_lambda_function" "wellcome_library_archive_redirect" {
 
   function_name = "cf_edge_wellcome_library_archive_redirect"
   role          = aws_iam_role.edge_lambda_role.arn
-  runtime       = "nodejs12.x"
+  runtime       = "nodejs16.x"
   handler       = "wellcomeLibraryArchiveRedirect.requestHandler"
   publish       = true
 
@@ -45,7 +45,7 @@ resource "aws_lambda_function" "wellcome_library_blog_redirect" {
 
   function_name = "cf_edge_wellcome_library_blog_redirect"
   role          = aws_iam_role.edge_lambda_role.arn
-  runtime       = "nodejs12.x"
+  runtime       = "nodejs16.x"
   handler       = "wellcomeLibraryBlogRedirect.requestHandler"
   publish       = true
 
@@ -59,7 +59,7 @@ resource "aws_lambda_function" "wellcome_library_redirect" {
 
   function_name = "cf_edge_wellcome_library_redirect"
   role          = aws_iam_role.edge_lambda_role.arn
-  runtime       = "nodejs12.x"
+  runtime       = "nodejs16.x"
   handler       = "wellcomeLibraryRedirect.requestHandler"
   publish       = true
 
