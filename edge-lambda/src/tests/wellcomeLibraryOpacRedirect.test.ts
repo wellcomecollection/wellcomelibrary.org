@@ -80,7 +80,7 @@ const searchTests = [
     {
       path: '/search~S12',
       qs:
-        '/Yhealth&searchscope=12&SORT=D/Y{health}&searchscope=12&SORT=D&SUBKEY={health}/1%2C32000%2C32000%2CB/frameset&FF=Yhealth&searchscope=12&SORT=D&1%2C1%2C',
+        '/Yhealth&searchscope=12&SORT=D/Y{health}&searchscope=12&SORT=D&SUBKEY=health/1%2C32000%2C32000%2CB/frameset&FF=Yhealth&searchscope=12&SORT=D&1%2C1%2C',
       resolvedUri: 'https://wellcomecollection.org/works?query=health',
     },
   ],
@@ -215,11 +215,22 @@ const fallbackTest = [
   ],
 ];
 
+const robotsTest = [
+  [
+    'robots.txt',
+    {
+      path: '/robots.txt',
+      resolvedUri: 'https://wellcomecollection.org/robots.txt',
+    },
+  ],
+];
+
 const opacTests = rootTest
   .concat(searchPageTests)
   .concat(searchTests)
   .concat(accountTests)
-  .concat(fallbackTest);
+  .concat(fallbackTest)
+  .concat(robotsTest);
 
 test.each(opacTests)('%s', (name: string, test: Test) => {
   const request = testRequest(test.path, test.qs ?? '', encoreHeaders);
