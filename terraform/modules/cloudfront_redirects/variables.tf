@@ -1,9 +1,21 @@
 variable "prod_domain_name" {
-  type = string
+  type    = string
+  default = ""
 }
 
 variable "stage_domain_name" {
-  type = string
+  type    = string
+  default = ""
+}
+
+variable "prod_domain_names" {
+  type    = list(string)
+  default = []
+}
+
+variable "stage_domain_names" {
+  type    = list(string)
+  default = []
 }
 
 variable "origin_domain_name" {

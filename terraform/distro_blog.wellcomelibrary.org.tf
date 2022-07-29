@@ -3,7 +3,6 @@ module "wellcomelibrary_blog_redirects" {
 
   prod_domain_name   = "blog.wellcomelibrary.org"
   stage_domain_name  = "blog.stage.wellcomelibrary.org"
-  origin_domain_name = "origin.wellcomelibrary.org"
 
   prod_redirect_function_arn  = local.wellcome_library_blog_redirect_arn_prod
   stage_redirect_function_arn = local.wellcome_library_blog_redirect_arn_stage
