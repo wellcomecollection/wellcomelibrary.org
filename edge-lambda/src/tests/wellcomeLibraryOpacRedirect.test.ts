@@ -125,34 +125,34 @@ const searchTests = [
   //       'https://wellcomecollection.org/works?workType=d&availabilities=online',
   //   },
   // ],
-  // [
-  //   'search for a bib (variant 1)',
-  //   {
-  //     path: '/record=b1191208',
-  //     results: results([
-  //       resultWithIdentifier('xy6nsffh', 'sierra-identifier', '1191208'),
-  //     ]),
-  //     resolvedUri: 'https://wellcomecollection.org/works/xy6nsffh',
-  //   },
-  // ],
-  // [
-  //   'search for a bib (variant 2)',
-  //   {
-  //     path: '/record=b1191208~S12',
-  //     results: results([
-  //       resultWithIdentifier('xy6nsffh', 'sierra-identifier', '1191208'),
-  //     ]),
-  //     resolvedUri: 'https://wellcomecollection.org/works/xy6nsffh',
-  //   },
-  // ],
-  // [
-  //   'search for a bib (no results)',
-  //   {
-  //     path: '/record=b1191208~S12',
-  //     results: [],
-  //     resolvedUri: 'https://wellcomecollection.org/works?query=1191208',
-  //   },
-  // ],
+  [
+    'search for a bib (variant 1)',
+    {
+      path: '/record=b1191208',
+      results: results([
+        resultWithIdentifier('xy6nsffh', 'sierra-identifier', '1191208'),
+      ]),
+      resolvedUri: 'https://wellcomecollection.org/works/xy6nsffh',
+    },
+  ],
+  [
+    'search for a bib (variant 2)',
+    {
+      path: '/record=b1191208~S12',
+      results: results([
+        resultWithIdentifier('xy6nsffh', 'sierra-identifier', '1191208'),
+      ]),
+      resolvedUri: 'https://wellcomecollection.org/works/xy6nsffh',
+    },
+  ],
+  [
+    'search for a bib (no results)',
+    {
+      path: '/record=b1191208~S12',
+      results: results([]),
+      resolvedUri: 'https://wellcomecollection.org/works/not-found',
+    },
+  ],
   [
     'search for a long phrase (from Stories)',
     {

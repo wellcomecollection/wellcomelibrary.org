@@ -1,7 +1,12 @@
 import { CloudFrontRequest, CloudFrontRequestEvent, Context } from 'aws-lambda';
 import { CloudFrontResultResponse } from 'aws-lambda/common/cloudfront';
-import { wellcomeCollectionRedirect } from './redirectHelpers';
+import {
+  getSierraIdentifierRedirect,
+  wellcomeCollectionNotFoundRedirect,
+  wellcomeCollectionRedirect,
+} from './redirectHelpers';
 import querystring from 'querystring';
+import { calcCheckDigit } from './paths';
 
 function getSearchRedirect(
   path: string,
@@ -38,6 +43,24 @@ function getSearchRedirect(
   return wellcomeCollectionRedirect('/collections/');
 }
 
+async function getWorksRedirect(
+  path: string
+): Promise<CloudFrontResultResponse> {
+  const match = path.match(/^\/record=b(?<bnumber>[0-9]{7}).*/);
+
+  if (match === null) {
+    console.warn(`Unable to deduce b-number from path ${path}`);
+    return wellcomeCollectionNotFoundRedirect;
+  }
+
+  const bnumber = match.groups!.bnumber;
+
+  return getSierraIdentifierRedirect({
+    sierraIdentifier: bnumber,
+    sierraSystemNumber: `b${bnumber}${calcCheckDigit(parseInt(bnumber, 10))}`,
+  });
+}
+
 export const requestHandler = async (
   event: CloudFrontRequestEvent,
   _: Context
@@ -50,6 +73,10 @@ export const requestHandler = async (
 
   if (path.startsWith('/search')) {
     return getSearchRedirect(path, request.querystring);
+  }
+
+  if (path.startsWith('/record')) {
+    return getWorksRedirect(path);
   }
 
   // https://catalogue.wellcomelibrary.org/
