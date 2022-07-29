@@ -57,10 +57,13 @@ export async function* apiQuery(
   }
 }
 
-export async function findWorkWithIdentifierValue(
-  identifierValue: string,
-  identifierType?: string
-): Promise<Work | undefined> {
+export async function findWorkWithIdentifierValue({
+  identifierValue,
+  identifierType,
+}: {
+  identifierValue: string;
+  identifierType?: string;
+}): Promise<Work | undefined> {
   const resultList = apiQuery(identifierValue);
 
   for await (const result of resultList) {

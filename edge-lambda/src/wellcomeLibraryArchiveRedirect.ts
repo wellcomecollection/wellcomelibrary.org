@@ -8,7 +8,7 @@ import { wellcomeCollectionRedirect } from './redirectHelpers';
 import { findWorkWithIdentifierValue } from './catalogueApi';
 
 async function getWorkWithId(term: string) {
-  const work = await findWorkWithIdentifierValue(term);
+  const work = await findWorkWithIdentifierValue({ identifierValue: term });
   if (work) {
     return wellcomeCollectionRedirect(`/works/${work.id}`);
   }
