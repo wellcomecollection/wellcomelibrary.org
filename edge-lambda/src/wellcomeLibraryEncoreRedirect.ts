@@ -5,7 +5,7 @@ import {
 } from 'aws-lambda/common/cloudfront';
 import {
   getSierraIdentifierRedirect,
-  wellcomeCollectionRedirect
+  wellcomeCollectionRedirect,
 } from './redirectHelpers';
 import { calcCheckDigit, GetBNumberResult } from './paths';
 import querystring from 'querystring';
@@ -40,22 +40,28 @@ type EncorePathComponent = {
 // Note: components are returned as they appear in the URL; this function does *not*
 // do any URL decoding.
 //
-function parseEncorePathComponents(finalPathPart: string): EncorePathComponent[] {
-  return finalPathPart.split('__')
-    .map(component => {
-      const letter = component.substring(0, 1);
-      const contents = component.substring(1, );
+function parseEncorePathComponents(
+  finalPathPart: string
+): EncorePathComponent[] {
+  return finalPathPart.split('__').map((component) => {
+    const letter = component.substring(0, 1);
+    const contents = component.substring(1);
 
-      return {
-        letter: letter,
-        contents: contents.length > 0 ? contents : undefined,
-      };
-    })
+    return {
+      letter: letter,
+      contents: contents.length > 0 ? contents : undefined,
+    };
+  });
 }
 
 export function getBnumberFromEncorePath(path: string): GetBNumberResult {
-  if (!path.startsWith('/iii/encore/record/') && !path.startsWith('/iii/mobile/record/')) {
-    return Error(`Path ${path} does not start with /iii/encore/record/ or /iii/mobile/record/`);
+  if (
+    !path.startsWith('/iii/encore/record/') &&
+    !path.startsWith('/iii/mobile/record/')
+  ) {
+    return Error(
+      `Path ${path} does not start with /iii/encore/record/ or /iii/mobile/record/`
+    );
   }
 
   const finalPathPart = path.split('/')[4];
@@ -65,9 +71,9 @@ export function getBnumberFromEncorePath(path: string): GetBNumberResult {
 
   // If defined, this will be something like '1234567'
   const bnumber = components
-    .filter(c => c.letter === 'R')
-    .find(c => c.contents && sierraBibRegexp.test(c.contents))
-    ?.contents?.substring(1, );
+    .filter((c) => c.letter === 'R')
+    .find((c) => c.contents && sierraBibRegexp.test(c.contents))
+    ?.contents?.substring(1);
 
   if (!bnumber) {
     return Error(`Could not find bib identifier in path ${path}`);
@@ -96,17 +102,15 @@ function getSearchRedirect(
   }
 
   // For URLs like /iii/encore/search?target=erythromelalgia&submit=Search
-  if (qs['submit'] === 'Search' && qs['target']) {
-    return wellcomeCollectionRedirect(`/works?query=${qs['target']}`)
+  if (qs.submit === 'Search' && qs.target) {
+    return wellcomeCollectionRedirect(`/works?query=${qs.target}`);
   }
 
   // For URLs like /iii/encore/search/C__Srosalind%20paget
   const finalPathPart = path.split('/')[4];
   const components = parseEncorePathComponents(finalPathPart);
 
-  const searchTerms = components
-    .find(c => c.letter === 'S')
-    ?.contents;
+  const searchTerms = components.find((c) => c.letter === 'S')?.contents;
 
   if (searchTerms) {
     return wellcomeCollectionRedirect(`/works?query=${searchTerms}`);
@@ -155,6 +159,8 @@ export const requestHandler = async (
   }
 
   // If we've matched nothing we redirect to the top-level collections page
-  console.warn(`Unable to redirect request ${JSON.stringify(event.Records[0].cf.request)}`);
+  console.warn(
+    `Unable to redirect request ${JSON.stringify(event.Records[0].cf.request)}`
+  );
   return wellcomeCollectionRedirect('/collections/');
 };
