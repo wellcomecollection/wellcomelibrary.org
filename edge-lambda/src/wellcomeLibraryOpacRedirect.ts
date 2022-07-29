@@ -13,7 +13,6 @@ function getSearchRedirect(
   qs: string
 ): CloudFrontResultResponse | Error {
   const parsedQs: querystring.ParsedUrlQuery = querystring.parse(qs);
-  const pathParts = path.split('/');
 
   // For URLs like /search/a?searchtype=Y&searcharg=health&searchscope=12&SORT=D
   if (typeof parsedQs.searcharg === 'string') {
