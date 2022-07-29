@@ -4,19 +4,19 @@ import { SierraIdentifier } from './paths';
 export async function getWork(
   sierraIdentifier: SierraIdentifier
 ): Promise<GetWorkResult> {
-  const sierraIdWork = await findWorkWithIdentifierValue(
-    sierraIdentifier.sierraIdentifier,
-    'sierra-identifier'
-  );
+  const sierraIdWork = await findWorkWithIdentifierValue({
+    identifierValue: sierraIdentifier.sierraIdentifier,
+    identifierType: 'sierra-identifier',
+  });
   if (sierraIdWork) {
     return sierraIdWork;
   }
 
   if (sierraIdentifier.sierraSystemNumber) {
-    const sierraSysNumWork = await findWorkWithIdentifierValue(
-      sierraIdentifier.sierraSystemNumber,
-      'sierra-system-number'
-    );
+    const sierraSysNumWork = await findWorkWithIdentifierValue({
+      identifierValue: sierraIdentifier.sierraSystemNumber,
+      identifierType: 'sierra-system-number',
+    });
     if (sierraSysNumWork) {
       return sierraSysNumWork;
     }
