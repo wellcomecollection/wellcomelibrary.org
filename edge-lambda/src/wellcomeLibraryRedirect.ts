@@ -7,7 +7,6 @@ import { getBnumberFromPath } from './paths';
 import {
   createRedirect,
   getSierraIdentifierRedirect,
-  wellcomeCollectionNotFoundRedirect,
   wellcomeCollectionRedirect,
 } from './redirectHelpers';
 import { redirectToRoot } from './redirectToRoot';
@@ -83,6 +82,8 @@ export const requestHandler = async (
   }
 
   // If we've matched nothing we redirect to wellcomecollection.org
-  console.warn(`Unable to redirect request ${JSON.stringify(event.Records[0].cf.request)}`);
+  console.warn(
+    `Unable to redirect request ${JSON.stringify(event.Records[0].cf.request)}`
+  );
   return wellcomeCollectionRedirect('/');
 };
