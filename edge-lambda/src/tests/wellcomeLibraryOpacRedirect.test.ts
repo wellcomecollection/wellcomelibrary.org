@@ -10,11 +10,9 @@ import { CatalogueResultsList } from '../catalogueApi';
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
-const encoreHeaders = {
-  host: [{ key: 'host', value: 'catalogue.wellcomelibrary.org' }],
-  'cloudfront-forwarded-proto': [
-    { key: 'cloudfront-forwarded-proto', value: 'https' },
-  ],
+const opacHeaders = {
+  host: 'catalogue.wellcomelibrary.org',
+  protocol: 'https',
 };
 
 type Test = {
@@ -233,7 +231,11 @@ const opacTests = rootTest
   .concat(robotsTest);
 
 test.each(opacTests)('%s', (name: string, test: Test) => {
-  const request = testRequest(test.path, test.qs ?? '', encoreHeaders);
+  const request = testRequest({
+    uri: test.path,
+    querystring: test.qs,
+    headers: opacHeaders,
+  });
 
   test.results &&
     mockedAxios.get.mockResolvedValue({
