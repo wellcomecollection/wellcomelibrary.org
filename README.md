@@ -63,6 +63,19 @@ It includes the code for redirecting users from the old site to the appropriate 
 
 [opac]: https://en.wikipedia.org/wiki/Online_public_access_catalog
 
+## How it works
+
+*   There are CloudFront distributions for the wellcomelibrary.org domains in the platform account.
+
+*   The CloudFront distributions connected to Lambda@Edge function s(defined in edge-lambda), which decides where to redirect the user.
+
+    (We use Lambda@Edge instead of CloudFront Functions because we sometimes need to make HTTP requests before doing a redirect. e.g. looking up a b number from a URL so we can find the appropriate works page. Also, this work was started several years before CloudFront Functions were released.)
+
+*   The Route 53 hosted zone for wellcomelibrary.org is defined in a D&T account. We create DNS records in that hosted zone that point to our CloudFront distributions.
+
+*   We have staging and prod variants of each subdomain.
+    This allows us to test redirections before we put them live.
+
 ## How to
 
 *   [Add a static redirect to wellcomelibrary.org](docs/add-static-redirect.md)
