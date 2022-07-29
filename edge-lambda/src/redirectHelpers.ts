@@ -49,10 +49,10 @@ export function createServerError(error: Error) {
 }
 
 export async function getSierraIdentifierRedirect(
-  sierraIdentifier: GetBNumberResult 
+  sierraIdentifier: GetBNumberResult
 ): Promise<CloudFrontResultResponse> {
   if (sierraIdentifier instanceof Error) {
-    console.error(sierraIdentifier);
+    console.error(`Unable to get redirect for ${sierraIdentifier}`);
     return wellcomeCollectionNotFoundRedirect;
   }
 
