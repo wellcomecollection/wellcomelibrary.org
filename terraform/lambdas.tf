@@ -1,66 +1,22 @@
-resource "aws_lambda_function" "wellcome_library_passthru" {
-  provider = aws.us_east_1
-
-  function_name = "cf_edge_wellcome_library_passthru"
-  role          = aws_iam_role.edge_lambda_role.arn
-  runtime       = "nodejs16.x"
-  handler       = "wellcomeLibraryPassthru.requestHandler"
-  publish       = true
-
-  s3_bucket         = data.aws_s3_bucket_object.wellcome_library_redirect.bucket
-  s3_key            = data.aws_s3_bucket_object.wellcome_library_redirect.key
-  s3_object_version = data.aws_s3_bucket_object.wellcome_library_redirect.version_id
+locals {
+  redirect_functions = {
+    passthru         = "wellcomeLibraryPassthru"
+    archive_redirect = "wellcomeLibraryArchiveRedirect"
+    blog_redirect    = "wellcomeLibraryBlogRedirect"
+    encore_redirect  = "wellcomeLibraryEncoreRedirect"
+    redirect         = "wellcomeLibraryRedirect"
+  }
 }
 
-resource "aws_lambda_function" "wellcome_library_encore_redirect" {
+resource "aws_lambda_function" "redirects" {
+  for_each = local.redirect_functions
+
   provider = aws.us_east_1
 
-  function_name = "cf_edge_wellcome_library_encore_redirect"
+  function_name = "cf_edge_wellcome_library_${each.key}"
   role          = aws_iam_role.edge_lambda_role.arn
   runtime       = "nodejs16.x"
-  handler       = "wellcomeLibraryEncoreRedirect.requestHandler"
-  publish       = true
-
-  s3_bucket         = data.aws_s3_bucket_object.wellcome_library_redirect.bucket
-  s3_key            = data.aws_s3_bucket_object.wellcome_library_redirect.key
-  s3_object_version = data.aws_s3_bucket_object.wellcome_library_redirect.version_id
-}
-
-resource "aws_lambda_function" "wellcome_library_archive_redirect" {
-  provider = aws.us_east_1
-
-  function_name = "cf_edge_wellcome_library_archive_redirect"
-  role          = aws_iam_role.edge_lambda_role.arn
-  runtime       = "nodejs16.x"
-  handler       = "wellcomeLibraryArchiveRedirect.requestHandler"
-  publish       = true
-
-  s3_bucket         = data.aws_s3_bucket_object.wellcome_library_redirect.bucket
-  s3_key            = data.aws_s3_bucket_object.wellcome_library_redirect.key
-  s3_object_version = data.aws_s3_bucket_object.wellcome_library_redirect.version_id
-}
-
-resource "aws_lambda_function" "wellcome_library_blog_redirect" {
-  provider = aws.us_east_1
-
-  function_name = "cf_edge_wellcome_library_blog_redirect"
-  role          = aws_iam_role.edge_lambda_role.arn
-  runtime       = "nodejs16.x"
-  handler       = "wellcomeLibraryBlogRedirect.requestHandler"
-  publish       = true
-
-  s3_bucket         = data.aws_s3_bucket_object.wellcome_library_redirect.bucket
-  s3_key            = data.aws_s3_bucket_object.wellcome_library_redirect.key
-  s3_object_version = data.aws_s3_bucket_object.wellcome_library_redirect.version_id
-}
-
-resource "aws_lambda_function" "wellcome_library_redirect" {
-  provider = aws.us_east_1
-
-  function_name = "cf_edge_wellcome_library_redirect"
-  role          = aws_iam_role.edge_lambda_role.arn
-  runtime       = "nodejs16.x"
-  handler       = "wellcomeLibraryRedirect.requestHandler"
+  handler       = "${local.redirect_functions[each.key]}.requestHandler"
   publish       = true
 
   s3_bucket         = data.aws_s3_bucket_object.wellcome_library_redirect.bucket
