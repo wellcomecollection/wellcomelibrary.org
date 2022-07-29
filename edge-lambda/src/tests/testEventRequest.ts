@@ -3,11 +3,15 @@ import { CloudFrontRequest } from 'aws-lambda/common/cloudfront';
 
 // This event structure was sourced from the AWS docs as below.
 // https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/lambda-event-structure.html#example-origin-request
-export const createCloudFrontRequestEvent = (
-  uri: string,
-  querystring?: string,
-  headers: CloudFrontHeaders = {}
-): CloudFrontRequestEvent => ({
+export const createCloudFrontRequestEvent = ({
+  uri,
+  querystring = '',
+  headers = {},
+}: {
+  uri: string;
+  querystring?: string;
+  headers?: CloudFrontHeaders;
+}): CloudFrontRequestEvent => ({
   Records: [
     {
       cf: {
@@ -17,20 +21,24 @@ export const createCloudFrontRequestEvent = (
           requestId: '',
           eventType: 'origin-request',
         },
-        request: createCloudFrontRequest(uri, querystring, headers),
+        request: createCloudFrontRequest({ uri, querystring, headers }),
       },
     },
   ],
 });
 
-export const createCloudFrontRequest = (
-  uri: string,
-  querystring?: string,
-  headers: CloudFrontHeaders = {}
-) => {
+export const createCloudFrontRequest = ({
+  uri,
+  querystring = '',
+  headers = {},
+}: {
+  uri: string;
+  querystring?: string;
+  headers?: CloudFrontHeaders;
+}) => {
   return {
-    uri: uri,
-    querystring: querystring || '',
+    uri,
+    querystring,
     method: 'GET',
     clientIp: '2001:cdba::3257:9652',
     headers: headers,

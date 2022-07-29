@@ -118,7 +118,11 @@ const encoreTests = [
 ] as [string, Test][];
 
 test.each(encoreTests)('%s', (name: string, test: Test) => {
-  const request = testRequest(test.path, test.qs ?? '', encoreHeaders);
+  const request = testRequest({
+    uri: test.path,
+    querystring: test.qs,
+    headers: encoreHeaders,
+  });
 
   test.results &&
     mockedAxios.get.mockResolvedValue({

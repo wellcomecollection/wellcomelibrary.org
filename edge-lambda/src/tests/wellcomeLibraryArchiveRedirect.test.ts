@@ -93,11 +93,11 @@ const archiveTests = [
 ] as [string, Test][];
 
 test.each(archiveTests)('%s', (name: string, test: Test) => {
-  const request = testRequest(
-    '/DServe/dserve.exe',
-    `dsqIni=Dserve.ini&dsqApp=Archive&dsqCmd=Show.tcl&dsqDb=Catalog&dsqPos=0&${test.qs}`,
-    archivedHeaders
-  );
+  const request = testRequest({
+    uri: '/DServe/dserve.exe',
+    querystring: `dsqIni=Dserve.ini&dsqApp=Archive&dsqCmd=Show.tcl&dsqDb=Catalog&dsqPos=0&${test.qs}`,
+    headers: archivedHeaders,
+  });
   mockedAxios.get.mockResolvedValueOnce({
     data: test.results,
   });

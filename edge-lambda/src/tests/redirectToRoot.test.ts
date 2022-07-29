@@ -4,11 +4,14 @@ import { createCloudFrontRequest } from './testEventRequest';
 import { expectedRedirect } from './testHelpers';
 
 test('http requests are redirected to https', () => {
-  const request = createCloudFrontRequest('/foo', undefined, {
-    host: [{ key: 'host', value: 'wellcomelibrary.org' }],
-    'cloudfront-forwarded-proto': [
-      { key: 'cloudfront-forwarded-proto', value: 'http' },
-    ],
+  const request = createCloudFrontRequest({
+    uri: '/foo',
+    headers: {
+      host: [{ key: 'host', value: 'wellcomelibrary.org' }],
+      'cloudfront-forwarded-proto': [
+        { key: 'cloudfront-forwarded-proto', value: 'http' },
+      ],
+    },
   });
 
   const redirectResult = redirectToRoot(request);
@@ -19,11 +22,14 @@ test('http requests are redirected to https', () => {
 });
 
 test('redirects www. to root', () => {
-  const request = createCloudFrontRequest('/foo', undefined, {
-    host: [{ key: 'host', value: 'www.wellcomelibrary.org' }],
-    'cloudfront-forwarded-proto': [
-      { key: 'cloudfront-forwarded-proto', value: 'https' },
-    ],
+  const request = createCloudFrontRequest({
+    uri: '/foo',
+    headers: {
+      host: [{ key: 'host', value: 'www.wellcomelibrary.org' }],
+      'cloudfront-forwarded-proto': [
+        { key: 'cloudfront-forwarded-proto', value: 'https' },
+      ],
+    },
   });
 
   const redirectResult = redirectToRoot(request);
@@ -34,11 +40,14 @@ test('redirects www. to root', () => {
 });
 
 test('redirects http AND www. to root/https together', () => {
-  const request = createCloudFrontRequest('/foo', undefined, {
-    host: [{ key: 'host', value: 'www.wellcomelibrary.org' }],
-    'cloudfront-forwarded-proto': [
-      { key: 'cloudfront-forwarded-proto', value: 'http' },
-    ],
+  const request = createCloudFrontRequest({
+    uri: '/foo',
+    headers: {
+      host: [{ key: 'host', value: 'www.wellcomelibrary.org' }],
+      'cloudfront-forwarded-proto': [
+        { key: 'cloudfront-forwarded-proto', value: 'http' },
+      ],
+    },
   });
 
   const redirectResult = redirectToRoot(request);
@@ -49,11 +58,14 @@ test('redirects http AND www. to root/https together', () => {
 });
 
 test('returns undefined if at root and with https', () => {
-  const request = createCloudFrontRequest('/foo', undefined, {
-    host: [{ key: 'host', value: 'wellcomelibrary.org' }],
-    'cloudfront-forwarded-proto': [
-      { key: 'cloudfront-forwarded-proto', value: 'https' },
-    ],
+  const request = createCloudFrontRequest({
+    uri: '/foo',
+    headers: {
+      host: [{ key: 'host', value: 'wellcomelibrary.org' }],
+      'cloudfront-forwarded-proto': [
+        { key: 'cloudfront-forwarded-proto', value: 'https' },
+      ],
+    },
   });
 
   const redirectResult = redirectToRoot(request);

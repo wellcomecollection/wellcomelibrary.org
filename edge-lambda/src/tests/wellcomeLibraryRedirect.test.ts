@@ -20,11 +20,14 @@ jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
 test('redirects www. to root', () => {
-  const request = testRequest('/foo', undefined, {
-    host: [{ key: 'host', value: 'www.wellcomelibrary.org' }],
-    'cloudfront-forwarded-proto': [
-      { key: 'cloudfront-forwarded-proto', value: 'https' },
-    ],
+  const request = testRequest({
+    uri: '/foo',
+    headers: {
+      host: [{ key: 'host', value: 'www.wellcomelibrary.org' }],
+      'cloudfront-forwarded-proto': [
+        { key: 'cloudfront-forwarded-proto', value: 'https' },
+      ],
+    },
   });
 
   const resultPromise = origin.requestHandler(request, {} as Context);
@@ -35,11 +38,14 @@ test('redirects www. to root', () => {
 });
 
 test('http requests are redirected to https', () => {
-  const request = testRequest('/foo', undefined, {
-    host: [{ key: 'host', value: 'wellcomelibrary.org' }],
-    'cloudfront-forwarded-proto': [
-      { key: 'cloudfront-forwarded-proto', value: 'http' },
-    ],
+  const request = testRequest({
+    uri: '/foo',
+    headers: {
+      host: [{ key: 'host', value: 'wellcomelibrary.org' }],
+      'cloudfront-forwarded-proto': [
+        { key: 'cloudfront-forwarded-proto', value: 'http' },
+      ],
+    },
   });
 
   const resultPromise = origin.requestHandler(request, {} as Context);
@@ -197,7 +203,10 @@ const rewriteTests = (): ExpectedRewrite[] => {
 test.each(rewriteTests())(
   'Request path is rewritten: %o',
   async (expected: ExpectedRewrite) => {
-    const request = testRequest(expected.uri, expected.queryString);
+    const request = testRequest({
+      uri: expected.uri,
+      querystring: expected.queryString,
+    });
 
     if (expected.error) {
       mockedAxios.get.mockImplementation(async () => {
@@ -243,7 +252,7 @@ const staticRedirectTests = Object.entries(staticRedirects).map(
 test.each(staticRedirectTests)(
   'Request path is rewritten: %o',
   async (expected: ExpectedRewrite) => {
-    const request = testRequest(expected.uri);
+    const request = testRequest({ uri: expected.uri });
 
     if (expected.generateData) {
       mockedAxios.get.mockResolvedValueOnce({ data: expected.generateData });
@@ -256,8 +265,11 @@ test.each(staticRedirectTests)(
 );
 
 test('redirects unknown paths to wellcomecollection.org', async () => {
-  const request = testRequest('/unspecifiedPath', undefined, {
-    host: [{ key: 'host', value: 'wellcomelibrary.org' }],
+  const request = testRequest({
+    uri: '/unspecifiedPath',
+    headers: {
+      host: [{ key: 'host', value: 'wellcomelibrary.org' }],
+    },
   });
 
   const originRequest = await origin.requestHandler(request, {} as Context);

@@ -5,11 +5,14 @@ import { Context } from 'aws-lambda';
 import { expectedRedirect } from './testHelpers';
 
 test('redirects www. to root', () => {
-  const request = testRequest('/foo', undefined, {
-    host: [{ key: 'host', value: 'www.wellcomelibrary.org' }],
-    'cloudfront-forwarded-proto': [
-      { key: 'cloudfront-forwarded-proto', value: 'https' },
-    ],
+  const request = testRequest({
+    uri: '/foo',
+    headers: {
+      host: [{ key: 'host', value: 'www.wellcomelibrary.org' }],
+      'cloudfront-forwarded-proto': [
+        { key: 'cloudfront-forwarded-proto', value: 'https' },
+      ],
+    },
   });
 
   const resultPromise = origin.requestHandler(request, {} as Context);
@@ -20,11 +23,14 @@ test('redirects www. to root', () => {
 });
 
 test('http requests are redirected to https', () => {
-  const request = testRequest('/foo', undefined, {
-    host: [{ key: 'host', value: 'wellcomelibrary.org' }],
-    'cloudfront-forwarded-proto': [
-      { key: 'cloudfront-forwarded-proto', value: 'http' },
-    ],
+  const request = testRequest({
+    uri: '/foo',
+    headers: {
+      host: [{ key: 'host', value: 'wellcomelibrary.org' }],
+      'cloudfront-forwarded-proto': [
+        { key: 'cloudfront-forwarded-proto', value: 'http' },
+      ],
+    },
   });
 
   const resultPromise = origin.requestHandler(request, {} as Context);
@@ -35,8 +41,11 @@ test('http requests are redirected to https', () => {
 });
 
 test('rewrites the host header if it exists', async () => {
-  const request = testRequest('/', undefined, {
-    host: [{ key: 'host', value: 'www.wellcomelibrary.org' }],
+  const request = testRequest({
+    uri: '/',
+    headers: {
+      host: [{ key: 'host', value: 'www.wellcomelibrary.org' }],
+    },
   });
 
   const originRequest = await origin.requestHandler(request, {} as Context);

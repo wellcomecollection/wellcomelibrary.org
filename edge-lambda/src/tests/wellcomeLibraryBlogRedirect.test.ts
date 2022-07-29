@@ -7,8 +7,11 @@ import { blogHost, waybackPrefix } from '../wellcomeLibraryBlogRedirect';
 
 test('redirects blog. to the wayback machine', () => {
   const expectedPath = '/foo';
-  const request = testRequest(expectedPath, undefined, {
-    host: [{ key: 'host', value: 'blog.wellcomelibrary.org' }],
+  const request = testRequest({
+    uri: expectedPath,
+    headers: {
+      host: [{ key: 'host', value: 'blog.wellcomelibrary.org' }],
+    },
   });
 
   const resultPromise = origin.requestHandler(request, {} as Context);
@@ -27,7 +30,7 @@ test('redirects blog. to the wayback machine', () => {
 
 test('errors if no host header', () => {
   const expectedPath = '/foo';
-  const request = testRequest(expectedPath, undefined, {});
+  const request = testRequest({ uri: expectedPath });
 
   const resultPromise = origin.requestHandler(request, {} as Context);
 
@@ -41,8 +44,11 @@ test('errors if no host header', () => {
 test('errors if host header has incorrect value', () => {
   const expectedPath = '/foo';
   const badHost = 'catalogue.wellcomelibrary.org';
-  const request = testRequest(expectedPath, undefined, {
-    host: [{ key: 'host', value: 'catalogue.wellcomelibrary.org' }],
+  const request = testRequest({
+    uri: expectedPath,
+    headers: {
+      host: [{ key: 'host', value: 'catalogue.wellcomelibrary.org' }],
+    },
   });
   const resultPromise = origin.requestHandler(request, {} as Context);
 
