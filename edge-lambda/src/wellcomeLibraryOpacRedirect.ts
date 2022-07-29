@@ -21,21 +21,40 @@ function getSearchRedirect(
   }
 
   // For URLs like /search/o44843i
-  if (pathParts.length >= 3) {
-    const possibleObjectNumber = pathParts[2];
+  const objectNumberRegex = /^\/search\/o(?<number>[0-9]+i).*/;
+  const objectNumberMatch = path.match(objectNumberRegex);
 
-    if (possibleObjectNumber.match(/^o[0-9]+i$/)) {
-      return wellcomeCollectionRedirect(
-        `/works?query=${possibleObjectNumber.slice(1)}`
-      );
-    }
+  if (objectNumberMatch !== null) {
+    const objectNumber = objectNumberMatch.groups!.number;
+
+    return wellcomeCollectionRedirect(`/works?query=${objectNumber}`);
   }
 
-  // For paths like /search~S12?/Yhealth&searchscope=12&SORT=D
-  if (qs.startsWith('/Y')) {
-    const query = qs.split('&')[0].split('/Y')[1];
+  // For URLs like /search~S12?/Yhealth&searchscope=12&SORT=D
+  const queryRegex = /^\/Y(?<query>[^&]+)&.*/;
+  const queryMatch = qs.match(queryRegex);
+
+  if (queryMatch !== null) {
+    const query = queryMatch.groups!.query;
 
     return wellcomeCollectionRedirect(`/works?query=${query}`);
+  }
+
+  // For URLs like /search~S12?/mZines./mzines/-3,-1,0,B/browse
+  const subjectRegex = /^\/m(?<query>[^/]+)\/.*/;
+  const subjectMatch = qs.match(subjectRegex);
+
+  if (subjectMatch !== null) {
+    const query = subjectMatch.groups!.query;
+
+    return wellcomeCollectionRedirect(`/works?subjects.label=${query}`);
+  }
+
+  // For URLs like /search/X?SEARCH=123&searchscope=7&SORT=AX&m=j
+  if (parsedQs.m === 'j' && typeof parsedQs.SEARCH === 'string') {
+    return wellcomeCollectionRedirect(
+      `/works?workType=d&availabilities=online&query=${parsedQs.SEARCH}`
+    );
   }
 
   // If we've matched nothing we redirect to the top-level collections page

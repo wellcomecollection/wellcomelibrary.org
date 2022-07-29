@@ -108,23 +108,23 @@ const searchTests = [
       resolvedUri: 'https://wellcomecollection.org/works?query=44843i',
     },
   ],
-  // [
-  //   'search for a subject heading',
-  //   {
-  //     path: '/search~S12',
-  //     qs: '/mZines./mzines/-3,-1,0,B/browse',
-  //     resolvedUri: 'https://wellcomecollection.org/works?subjects.label=Zines.',
-  //   },
-  // ],
-  // [
-  //   'search for e-journals',
-  //   {
-  //     path: '/search/X',
-  //     qs: 'SEARCH=1&searchscope=7&SORT=AX&m=j',
-  //     resolvedUri:
-  //       'https://wellcomecollection.org/works?workType=d&availabilities=online',
-  //   },
-  // ],
+  [
+    'search for a subject heading',
+    {
+      path: '/search~S12',
+      qs: '/mZines./mzines/-3,-1,0,B/browse',
+      resolvedUri: 'https://wellcomecollection.org/works?subjects.label=Zines.',
+    },
+  ],
+  [
+    'search for e-journals',
+    {
+      path: '/search/X',
+      qs: 'SEARCH=123&searchscope=7&SORT=AX&m=j',
+      resolvedUri:
+        'https://wellcomecollection.org/works?workType=d&availabilities=online&query=123',
+    },
+  ],
   [
     'search for a bib (variant 1)',
     {
