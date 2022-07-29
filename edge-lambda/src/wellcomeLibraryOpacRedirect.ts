@@ -5,13 +5,14 @@ import querystring from 'querystring';
 
 function getSearchRedirect(
   path: string,
-  qs: querystring.ParsedUrlQuery
+  qs: string
 ): CloudFrontResultResponse | Error {
+  const parsedQs: querystring.ParsedUrlQuery = querystring.parse(qs);
   const pathParts = path.split('/');
 
   // For URLs like /search/a?searchtype=Y&searcharg=health&searchscope=12&SORT=D
-  if (typeof qs.searcharg === 'string') {
-    return wellcomeCollectionRedirect(`/works?query=${qs.searcharg}`);
+  if (typeof parsedQs.searcharg === 'string') {
+    return wellcomeCollectionRedirect(`/works?query=${parsedQs.searcharg}`);
   }
 
   // For URLs like /search/o44843i
@@ -25,13 +26,15 @@ function getSearchRedirect(
     }
   }
 
+  // For paths like /search~S12?/Yhealth&searchscope=12&SORT=D
+  if (qs.startsWith('/Y')) {
+    const query = qs.split('&')[0].split('/Y')[1];
+
+    return wellcomeCollectionRedirect(`/works?query=${query}`);
+  }
+
   // If we've matched nothing we redirect to the top-level collections page
-  //
-  // Note that some of the query string values in OPAC are v weird, so we cast to JSON
-  // before string interpolating to avoid type errors.
-  console.warn(
-    `Could not extract search term from path=${path}, qs=${JSON.stringify(qs)}`
-  );
+  console.warn(`Could not extract search term from path=${path}, qs=${qs}`);
   return wellcomeCollectionRedirect('/collections/');
 }
 
@@ -44,10 +47,9 @@ export const requestHandler = async (
   request.headers.host = [{ key: 'host', value: 'search.wellcomelibrary.org' }];
 
   const path = request.uri;
-  const qs: querystring.ParsedUrlQuery = querystring.parse(request.querystring);
 
   if (path.startsWith('/search')) {
-    return getSearchRedirect(path, qs);
+    return getSearchRedirect(path, request.querystring);
   }
 
   // https://catalogue.wellcomelibrary.org/

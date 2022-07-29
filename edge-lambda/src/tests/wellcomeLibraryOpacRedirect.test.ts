@@ -73,15 +73,15 @@ const searchTests = [
       resolvedUri: 'https://wellcomecollection.org/works?query=health',
     },
   ],
-  // [
-  //   'search for a single word (variant 3)',
-  //   {
-  //     path: '/search~S12',
-  //     qs:
-  //       '/Yhealth&searchscope=12&SORT=D/Yhealth&searchscope=12&SORT=D&SUBKEY=health/1%2C32000%2C32000%2CB/frameset&FF=Yhealth&searchscope=12&SORT=D&1%2C1%2C',
-  //     resolvedUri: 'https://wellcomecollection.org/works?query=health',
-  //   },
-  // ],
+  [
+    'search for a single word (variant 3)',
+    {
+      path: '/search~S12',
+      qs:
+        '/Yhealth&searchscope=12&SORT=D/Yhealth&searchscope=12&SORT=D&SUBKEY=health/1%2C32000%2C32000%2CB/frameset&FF=Yhealth&searchscope=12&SORT=D&1%2C1%2C',
+      resolvedUri: 'https://wellcomecollection.org/works?query=health',
+    },
+  ],
   [
     'search for multiple (variant 1)',
     {
@@ -153,16 +153,16 @@ const searchTests = [
   //     resolvedUri: 'https://wellcomecollection.org/works?query=1191208',
   //   },
   // ],
-  // [
-  //   'search for a long phrase (from Stories)',
-  //   {
-  //     path: '/search~S12',
-  //     qs:
-  //       '/Ycollateral+damage&searchscope=12&SORT=D/Ycollateral+damage&searchscope=12&SORT=D&SUBKEY=collateral+damage/1%2C10%2C10%2CB/frameset&FF=Ycollateral+damage&searchscope=12&SORT=D&1%2C1%2C',
-  //     resolvedUri:
-  //       'https://wellcomecollection.org/works?page=1&query=collateral%20damage',
-  //   },
-  // ],
+  [
+    'search for a long phrase (from Stories)',
+    {
+      path: '/search~S12',
+      qs:
+        '/Ycollateral+damage&searchscope=12&SORT=D/Ycollateral+damage&searchscope=12&SORT=D&SUBKEY=collateral+damage/1%2C10%2C10%2CB/frameset&FF=Ycollateral+damage&searchscope=12&SORT=D&1%2C1%2C',
+      resolvedUri:
+        'https://wellcomecollection.org/works?query=collateral+damage',
+    },
+  ],
 ];
 
 const accountTests = [
