@@ -58,7 +58,7 @@ function getSearchRedirect(
 
   // If we've matched nothing we redirect to the top-level collections page
   console.warn(`Could not extract search term from path=${path}, qs=${qs}`);
-  return wellcomeCollectionRedirect('/collections/');
+  return wellcomeCollectionRedirect('/collections');
 }
 
 async function getWorksRedirect(

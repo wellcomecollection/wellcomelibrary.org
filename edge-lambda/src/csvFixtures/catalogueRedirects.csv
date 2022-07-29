@@ -1,0 +1,7 @@
+sourceUrl,targetUrl
+catalogue.wellcomelibrary.org,https://wellcomecollection.org/collections
+catalogue.wellcomelibrary.org/search/X,https://wellcomecollection.org/collections
+catalogue.wellcomelibrary.org/search/a?searchtype=any&searcharg=health&searchscope=any&SORT=any,https://wellcomecollection.org/works?query=health
+catalogue.wellcomelibrary.org/search/o44843i,https://wellcomecollection.org/works?query=44843i
+"catalogue.wellcomelibrary.org/search~S12?/mZines./mzines/-3,-1,0,B/browse",https://wellcomecollection.org/works?subjects.label=Zines.
+catalogue.wellcomelibrary.org/patroninfo,https://wellcomecollection.org/account

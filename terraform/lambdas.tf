@@ -2,7 +2,7 @@ locals {
   redirect_functions = {
     passthru           = "wellcomeLibraryPassthru"
     archive_redirect   = "wellcomeLibraryArchiveRedirect"
-    catalogue_redirect = "wellcomeLibraryOpacRedirect"
+    catalogue_redirect = "wellcomeLibraryCatalogueRedirect"
     blog_redirect      = "wellcomeLibraryBlogRedirect"
     encore_redirect    = "wellcomeLibraryEncoreRedirect"
     redirect           = "wellcomeLibraryRedirect"

@@ -228,6 +228,18 @@ const encoreTestSet = {
   headers: ['sourceUrl', 'targetUrl'],
   envs: {
     stage: 'https://search.stage.wellcomelibrary.org',
+    prod: 'https://search.wellcomelibrary.org',
+  },
+  checkRedirect: checkMatchingUrl,
+};
+
+const catalogueTestSet = {
+  displayName: 'catalogue.wl.org pages',
+  fileLocation: 'src/csvFixtures/catalogueRedirects.csv',
+  fileHostPrefix: 'catalogue.wellcomelibrary.org',
+  headers: ['sourceUrl', 'targetUrl'],
+  envs: {
+    stage: 'https://catalogue.stage.wellcomelibrary.org',
   },
   checkRedirect: checkMatchingUrl,
 };
@@ -239,7 +251,8 @@ const testSets: RedirectTestSet[] = [
   apexTestSet,
   archiveTestSet,
   collectionBrowseTestSet,
-  encoreTestSet
+  encoreTestSet,
+  catalogueTestSet
 ];
 
 const runTests = async (envId: EnvId) => {
