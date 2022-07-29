@@ -1,16 +1,7 @@
-locals {
-  prod_distro_alternative_names = var.prod_domain_name == "" ? var.prod_domain_names : [
-    var.prod_domain_name
-  ]
-  stage_distro_alternative_names = var.stage_domain_name == "" ? var.stage_domain_names : [
-    var.stage_domain_name
-  ]
-}
-
 module "cloudfront_prod" {
   source = "../cloudfront_distro"
 
-  distro_alternative_names = local.prod_distro_alternative_names
+  distro_alternative_names = [var.prod_domain_name]
 
   acm_certificate_arn = var.acm_certificate_arn
 
@@ -32,7 +23,7 @@ module "cloudfront_prod" {
 module "cloudfront_stage" {
   source = "../cloudfront_distro"
 
-  distro_alternative_names = local.stage_distro_alternative_names
+  distro_alternative_names = [var.stage_domain_name]
 
   acm_certificate_arn = var.acm_certificate_arn
 
@@ -52,10 +43,8 @@ module "cloudfront_stage" {
 }
 
 resource "aws_route53_record" "prod" {
-  for_each = toset(local.prod_distro_alternative_names)
-
   zone_id = var.route53_zone_id
-  name    = each.key
+  name    = var.prod_domain_name
   type    = "CNAME"
 
   records = [module.cloudfront_prod.distro_domain_name]
@@ -65,10 +54,8 @@ resource "aws_route53_record" "prod" {
 }
 
 resource "aws_route53_record" "stage" {
-  for_each = toset(local.stage_distro_alternative_names)
-
   zone_id = var.route53_zone_id
-  name    = each.key
+  name    = var.stage_domain_name
   type    = "CNAME"
   records = [module.cloudfront_stage.distro_domain_name]
   ttl     = "60"

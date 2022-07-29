@@ -16,11 +16,6 @@ locals {
     }
   ]
 
-  prod_behaviours = concat(
-    local.moh_behaviours,
-  )
-
-  stage_behaviours = concat(
-    local.moh_behaviours,
-  )
+  prod_behaviours  = local.moh_behaviours
+  stage_behaviours = local.moh_behaviours
 }
