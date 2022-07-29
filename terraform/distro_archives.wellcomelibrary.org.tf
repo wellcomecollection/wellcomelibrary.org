@@ -1,45 +1,21 @@
 // DServe links (archives.wellcomelibrary.org)
 
-module "wellcomelibrary_dserve-prod" {
-  source = "./modules/cloudfront_distro"
+module "wellcomelibrary_dserve_redirects" {
+  source = "./modules/cloudfront_redirects"
 
-  distro_alternative_names = [
-    "archives.wellcomelibrary.org"
-  ]
+  prod_domain_name   = "archives.wellcomelibrary.org"
+  stage_domain_name  = "archives.stage.wellcomelibrary.org"
+  origin_domain_name = "archives.origin.wellcomelibrary.org"
+
+  prod_redirect_function_arn  = local.wellcome_library_archive_redirect_arn_prod
+  stage_redirect_function_arn = local.wellcome_library_archive_redirect_arn_stage
+
   acm_certificate_arn = module.cert-stage.arn
+  route53_zone_id     = data.aws_route53_zone.zone.id
 
-  origins = [{
-    origin_id : "origin"
-    domain_name : "archives.origin.wellcomelibrary.org"
-    origin_path : null
-    origin_protocol_policy : "match-viewer"
-  }]
-
-  default_target_origin_id                       = "origin"
-  default_lambda_function_association_event_type = "origin-request"
-  default_lambda_function_association_lambda_arn = local.wellcome_library_archive_redirect_arn_prod
-  default_forwarded_headers                      = ["Host"]
-}
-
-module "wellcomelibrary_dserve-stage" {
-  source = "./modules/cloudfront_distro"
-
-  distro_alternative_names = [
-    "archives.stage.wellcomelibrary.org"
-  ]
-  acm_certificate_arn = module.cert-stage.arn
-
-  origins = [{
-    origin_id : "origin"
-    domain_name : "archives.origin.wellcomelibrary.org"
-    origin_path : null
-    origin_protocol_policy : "http-only"
-  }]
-
-  default_target_origin_id                       = "origin"
-  default_lambda_function_association_event_type = "origin-request"
-  default_lambda_function_association_lambda_arn = local.wellcome_library_archive_redirect_arn_stage
-  default_forwarded_headers                      = ["Host"]
+  providers = {
+    aws.dns = aws.dns
+  }
 }
 
 resource "aws_route53_record" "dserve-origin" {
@@ -48,27 +24,6 @@ resource "aws_route53_record" "dserve-origin" {
   type    = "CNAME"
 
   records = ["archives.wellcome.ac.uk."]
-  ttl     = "60"
-
-  provider = aws.dns
-}
-
-resource "aws_route53_record" "dserve-prod" {
-  zone_id = data.aws_route53_zone.zone.id
-  name    = "archives.wellcomelibrary.org"
-  type    = "CNAME"
-
-  records = [module.wellcomelibrary_dserve-prod.distro_domain_name]
-  ttl     = "60"
-
-  provider = aws.dns
-}
-
-resource "aws_route53_record" "dserve-stage" {
-  zone_id = data.aws_route53_zone.zone.id
-  name    = "archives.stage.wellcomelibrary.org"
-  type    = "CNAME"
-  records = [module.wellcomelibrary_dserve-stage.distro_domain_name]
   ttl     = "60"
 
   provider = aws.dns
