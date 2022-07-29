@@ -1,4 +1,4 @@
-import * as origin from '../wellcomeLibraryOpacRedirect';
+import * as origin from '../wellcomeLibraryCatalogueRedirect';
 import testRequest from './testEventRequest';
 import { Context } from 'aws-lambda';
 import { results, resultWithIdentifier } from './catalogueApiFixtures';
