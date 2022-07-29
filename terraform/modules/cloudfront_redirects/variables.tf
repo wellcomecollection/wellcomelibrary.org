@@ -1,3 +1,8 @@
+variable "disable_prod_redirect" {
+  type    = bool
+  default = false
+}
+
 variable "prod_domain_name" {
   type    = string
   default = ""

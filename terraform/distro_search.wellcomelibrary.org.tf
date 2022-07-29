@@ -29,7 +29,7 @@ resource "aws_route53_record" "encore-origin" {
   zone_id = data.aws_route53_zone.zone.id
   name    = "search.origin.wellcomelibrary.org"
   type    = "CNAME"
-  records = [module.wellcomelibrary_search_redirects.prod_distro_domain_name]
+  records = module.wellcomelibrary_search_redirects.prod_distro_domain_name
   ttl     = "60"
 
   provider = aws.dns

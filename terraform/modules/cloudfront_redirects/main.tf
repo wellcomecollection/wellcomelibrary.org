@@ -1,6 +1,8 @@
 module "cloudfront_prod" {
   source = "../cloudfront_distro"
 
+  count = var.disable_prod_redirect ? 0 : 1
+
   distro_alternative_names = [var.prod_domain_name]
 
   acm_certificate_arn = var.acm_certificate_arn
@@ -43,11 +45,13 @@ module "cloudfront_stage" {
 }
 
 resource "aws_route53_record" "prod" {
+  count = var.disable_prod_redirect ? 0 : 1
+
   zone_id = var.route53_zone_id
   name    = var.prod_domain_name
   type    = "CNAME"
 
-  records = [module.cloudfront_prod.distro_domain_name]
+  records = module.cloudfront_prod.*.distro_domain_name
   ttl     = "60"
 
   provider = aws.dns
@@ -57,7 +61,7 @@ resource "aws_route53_record" "stage" {
   zone_id = var.route53_zone_id
   name    = var.stage_domain_name
   type    = "CNAME"
-  records = [module.cloudfront_stage.distro_domain_name]
+  records = module.cloudfront_stage.*.distro_domain_name
   ttl     = "60"
 
   provider = aws.dns
