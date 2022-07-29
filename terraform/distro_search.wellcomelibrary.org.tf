@@ -7,73 +7,29 @@ locals {
   encore_ip_address = "35.176.25.168"
 }
 
-module "wellcomelibrary_encore-prod" {
-  source = "./modules/cloudfront_distro"
+module "wellcomelibrary_search_redirects" {
+  source = "./modules/cloudfront_redirects"
 
-  distro_alternative_names = [
-    "search.wellcomelibrary.org"
-  ]
-  acm_certificate_arn = module.cert.arn
+  prod_domain_name   = "search.wellcomelibrary.org"
+  stage_domain_name  = "search.stage.wellcomelibrary.org"
+  origin_domain_name = "search.origin.wellcomelibrary.org"
 
-  origins = [{
-    origin_id : "origin"
-    domain_name : "search.origin.wellcomelibrary.org"
-    origin_path : null
-    origin_protocol_policy : "match-viewer"
-  }]
+  prod_redirect_function_arn  = local.wellcome_library_encore_redirect_arn_prod
+  stage_redirect_function_arn = local.wellcome_library_encore_redirect_arn_stage
 
-  default_target_origin_id                       = "origin"
-  default_lambda_function_association_event_type = "origin-request"
-  default_lambda_function_association_lambda_arn = local.wellcome_library_encore_redirect_arn_stage
-  default_forwarded_headers                      = ["Host"]
-}
-
-module "wellcomelibrary_encore-stage" {
-  source = "./modules/cloudfront_distro"
-
-  distro_alternative_names = [
-    "search.stage.wellcomelibrary.org"
-  ]
   acm_certificate_arn = module.cert-stage.arn
+  route53_zone_id     = data.aws_route53_zone.zone.id
 
-  origins = [{
-    origin_id : "origin"
-    domain_name : "search.origin.wellcomelibrary.org"
-    origin_path : null
-    origin_protocol_policy : "http-only"
-  }]
-
-  default_target_origin_id                       = "origin"
-  default_lambda_function_association_event_type = "origin-request"
-  default_lambda_function_association_lambda_arn = local.wellcome_library_encore_redirect_arn_stage
-  default_forwarded_headers                      = ["Host"]
-}
-
-resource "aws_route53_record" "encore-prod" {
-  zone_id = data.aws_route53_zone.zone.id
-  name    = "search.wellcomelibrary.org"
-  type    = "CNAME"
-  records = [module.wellcomelibrary_encore-prod.distro_domain_name]
-  ttl     = "300"
-
-  provider = aws.dns
+  providers = {
+    aws.dns = aws.dns
+  }
 }
 
 resource "aws_route53_record" "encore-origin" {
   zone_id = data.aws_route53_zone.zone.id
   name    = "search.origin.wellcomelibrary.org"
   type    = "CNAME"
-  records = [module.wellcomelibrary_encore-prod.distro_domain_name]
-  ttl     = "60"
-
-  provider = aws.dns
-}
-
-resource "aws_route53_record" "encore-stage" {
-  zone_id = data.aws_route53_zone.zone.id
-  name    = "search.stage.wellcomelibrary.org"
-  type    = "CNAME"
-  records = [module.wellcomelibrary_encore-stage.distro_domain_name]
+  records = module.wellcomelibrary_search_redirects.prod_distro_domain_name
   ttl     = "60"
 
   provider = aws.dns
