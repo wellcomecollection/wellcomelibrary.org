@@ -15,8 +15,14 @@ function getSearchRedirect(
   }
 
   // For URLs like /search/o44843i
-  if (pathParts.length >= 3 && pathParts[2].match(/^o[0-9]+i$/)) {
-    return wellcomeCollectionRedirect(`/works?query=${pathParts[1].slice(1)}`);
+  if (pathParts.length >= 3) {
+    const possibleObjectNumber = pathParts[2];
+
+    if (possibleObjectNumber.match(/^o[0-9]+i$/)) {
+      return wellcomeCollectionRedirect(
+        `/works?query=${possibleObjectNumber.slice(1)}`
+      );
+    }
   }
 
   // If we've matched nothing we redirect to the top-level collections page
