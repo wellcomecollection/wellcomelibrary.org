@@ -1,61 +1,17 @@
-module "wellcomelibrary_blog-prod" {
-  source = "./modules/cloudfront_distro"
+module "wellcomelibrary_blog_redirects" {
+  source = "./modules/cloudfront_redirects"
 
-  distro_alternative_names = [
-    "blog.wellcomelibrary.org"
-  ]
+  prod_domain_name   = "blog.wellcomelibrary.org"
+  stage_domain_name  = "blog.stage.wellcomelibrary.org"
+  origin_domain_name = "origin.wellcomelibrary.org"
+
+  prod_redirect_function_arn  = local.wellcome_library_blog_redirect_arn_prod
+  stage_redirect_function_arn = local.wellcome_library_blog_redirect_arn_stage
+
   acm_certificate_arn = module.cert-stage.arn
+  route53_zone_id     = data.aws_route53_zone.zone.id
 
-  origins = [{
-    origin_id : "origin"
-    domain_name : "origin.wellcomelibrary.org"
-    origin_path : null
-    origin_protocol_policy : "match-viewer"
-  }]
-
-  default_target_origin_id                       = "origin"
-  default_lambda_function_association_event_type = "origin-request"
-  default_lambda_function_association_lambda_arn = local.wellcome_library_blog_redirect_arn_prod
-  default_forwarded_headers                      = ["Host"]
-}
-
-module "wellcomelibrary_blog-stage" {
-  source = "./modules/cloudfront_distro"
-
-  distro_alternative_names = [
-    "blog.stage.wellcomelibrary.org"
-  ]
-  acm_certificate_arn = module.cert-stage.arn
-
-  origins = [{
-    origin_id : "origin"
-    domain_name : "origin.wellcomelibrary.org"
-    origin_path : null
-    origin_protocol_policy : "match-viewer"
-  }]
-
-  default_target_origin_id                       = "origin"
-  default_lambda_function_association_event_type = "origin-request"
-  default_lambda_function_association_lambda_arn = local.wellcome_library_blog_redirect_arn_stage
-  default_forwarded_headers                      = ["Host"]
-}
-
-resource "aws_route53_record" "blog-prod" {
-  zone_id = data.aws_route53_zone.zone.id
-  name    = "blog.wellcomelibrary.org"
-  type    = "CNAME"
-  records = [module.wellcomelibrary_blog-prod.distro_domain_name]
-  ttl     = "60"
-
-  provider = aws.dns
-}
-
-resource "aws_route53_record" "blog-stage" {
-  zone_id = data.aws_route53_zone.zone.id
-  name    = "blog.stage.wellcomelibrary.org"
-  type    = "CNAME"
-  records = [module.wellcomelibrary_blog-stage.distro_domain_name]
-  ttl     = "60"
-
-  provider = aws.dns
+  providers = {
+    aws.dns = aws.dns
+  }
 }

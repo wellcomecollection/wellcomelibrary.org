@@ -7,7 +7,8 @@ variable "stage_domain_name" {
 }
 
 variable "origin_domain_name" {
-  type = string
+  type    = string
+  default = "origin.wellcomelibrary.org"
 }
 
 variable "prod_redirect_function_arn" {
