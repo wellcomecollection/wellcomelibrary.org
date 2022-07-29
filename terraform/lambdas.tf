@@ -19,12 +19,12 @@ resource "aws_lambda_function" "redirects" {
   handler       = "${local.redirect_functions[each.key]}.requestHandler"
   publish       = true
 
-  s3_bucket         = data.aws_s3_bucket_object.wellcome_library_redirect.bucket
-  s3_key            = data.aws_s3_bucket_object.wellcome_library_redirect.key
-  s3_object_version = data.aws_s3_bucket_object.wellcome_library_redirect.version_id
+  s3_bucket         = data.aws_s3_object.wellcome_library_redirect.bucket
+  s3_key            = data.aws_s3_object.wellcome_library_redirect.key
+  s3_object_version = data.aws_s3_object.wellcome_library_redirect.version_id
 }
 
-data "aws_s3_bucket_object" "wellcome_library_redirect" {
+data "aws_s3_object" "wellcome_library_redirect" {
   provider = aws.us_east_1
 
   bucket = local.edge_lambdas_bucket
