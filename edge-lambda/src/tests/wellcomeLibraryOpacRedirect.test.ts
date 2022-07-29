@@ -75,15 +75,15 @@ const searchTests = [
       resolvedUri: 'https://wellcomecollection.org/works?query=health',
     },
   ],
-  [
-    'search for a single word (variant 3)',
-    {
-      path: '/search~S12',
-      qs:
-        '/Yhealth&searchscope=12&SORT=D/Y{health}&searchscope=12&SORT=D&SUBKEY=health/1%2C32000%2C32000%2CB/frameset&FF=Yhealth&searchscope=12&SORT=D&1%2C1%2C',
-      resolvedUri: 'https://wellcomecollection.org/works?query=health',
-    },
-  ],
+  // [
+  //   'search for a single word (variant 3)',
+  //   {
+  //     path: '/search~S12',
+  //     qs:
+  //       '/Yhealth&searchscope=12&SORT=D/Yhealth&searchscope=12&SORT=D&SUBKEY=health/1%2C32000%2C32000%2CB/frameset&FF=Yhealth&searchscope=12&SORT=D&1%2C1%2C',
+  //     resolvedUri: 'https://wellcomecollection.org/works?query=health',
+  //   },
+  // ],
   [
     'search for multiple (variant 1)',
     {
@@ -110,61 +110,61 @@ const searchTests = [
       resolvedUri: 'https://wellcomecollection.org/works?query=44843i',
     },
   ],
-  [
-    'search for a subject heading',
-    {
-      path: '/search~S12',
-      qs: '/mZines./mzines/-3,-1,0,B/browse',
-      resolvedUri: 'https://wellcomecollection.org/works?subjects.label=Zines.',
-    },
-  ],
-  [
-    'search for e-journals',
-    {
-      path: '/search/X',
-      qs: 'SEARCH=1&searchscope=7&SORT=AX&m=j',
-      resolvedUri:
-        'https://wellcomecollection.org/works?workType=d&availabilities=online',
-    },
-  ],
-  [
-    'search for a bib (variant 1)',
-    {
-      path: '/record=b1191208',
-      results: results([
-        resultWithIdentifier('xy6nsffh', 'sierra-identifier', '1191208'),
-      ]),
-      resolvedUri: 'https://wellcomecollection.org/works/xy6nsffh',
-    },
-  ],
-  [
-    'search for a bib (variant 2)',
-    {
-      path: '/record=b1191208~S12',
-      results: results([
-        resultWithIdentifier('xy6nsffh', 'sierra-identifier', '1191208'),
-      ]),
-      resolvedUri: 'https://wellcomecollection.org/works/xy6nsffh',
-    },
-  ],
-  [
-    'search for a bib (no results)',
-    {
-      path: '/record=b1191208~S12',
-      results: [],
-      resolvedUri: 'https://wellcomecollection.org/works?query=1191208',
-    },
-  ],
-  [
-    'search for a long phrase (from Stories)',
-    {
-      path: '/search~S12',
-      qs:
-        '/Ycollateral+damage&searchscope=12&SORT=D/Ycollateral+damage&searchscope=12&SORT=D&SUBKEY=collateral+damage/1%2C10%2C10%2CB/frameset&FF=Ycollateral+damage&searchscope=12&SORT=D&1%2C1%2C',
-      resolvedUri:
-        'https://wellcomecollection.org/works?page=1&query=collateral%20damage',
-    },
-  ],
+  // [
+  //   'search for a subject heading',
+  //   {
+  //     path: '/search~S12',
+  //     qs: '/mZines./mzines/-3,-1,0,B/browse',
+  //     resolvedUri: 'https://wellcomecollection.org/works?subjects.label=Zines.',
+  //   },
+  // ],
+  // [
+  //   'search for e-journals',
+  //   {
+  //     path: '/search/X',
+  //     qs: 'SEARCH=1&searchscope=7&SORT=AX&m=j',
+  //     resolvedUri:
+  //       'https://wellcomecollection.org/works?workType=d&availabilities=online',
+  //   },
+  // ],
+  // [
+  //   'search for a bib (variant 1)',
+  //   {
+  //     path: '/record=b1191208',
+  //     results: results([
+  //       resultWithIdentifier('xy6nsffh', 'sierra-identifier', '1191208'),
+  //     ]),
+  //     resolvedUri: 'https://wellcomecollection.org/works/xy6nsffh',
+  //   },
+  // ],
+  // [
+  //   'search for a bib (variant 2)',
+  //   {
+  //     path: '/record=b1191208~S12',
+  //     results: results([
+  //       resultWithIdentifier('xy6nsffh', 'sierra-identifier', '1191208'),
+  //     ]),
+  //     resolvedUri: 'https://wellcomecollection.org/works/xy6nsffh',
+  //   },
+  // ],
+  // [
+  //   'search for a bib (no results)',
+  //   {
+  //     path: '/record=b1191208~S12',
+  //     results: [],
+  //     resolvedUri: 'https://wellcomecollection.org/works?query=1191208',
+  //   },
+  // ],
+  // [
+  //   'search for a long phrase (from Stories)',
+  //   {
+  //     path: '/search~S12',
+  //     qs:
+  //       '/Ycollateral+damage&searchscope=12&SORT=D/Ycollateral+damage&searchscope=12&SORT=D&SUBKEY=collateral+damage/1%2C10%2C10%2CB/frameset&FF=Ycollateral+damage&searchscope=12&SORT=D&1%2C1%2C',
+  //     resolvedUri:
+  //       'https://wellcomecollection.org/works?page=1&query=collateral%20damage',
+  //   },
+  // ],
 ];
 
 const accountTests = [

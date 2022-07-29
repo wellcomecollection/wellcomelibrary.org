@@ -1,6 +1,33 @@
 import { CloudFrontRequest, CloudFrontRequestEvent, Context } from 'aws-lambda';
+import { CloudFrontResultResponse } from 'aws-lambda/common/cloudfront';
 import { wellcomeCollectionRedirect } from './redirectHelpers';
 import querystring from 'querystring';
+
+function getSearchRedirect(
+  path: string,
+  qs: querystring.ParsedUrlQuery
+): CloudFrontResultResponse | Error {
+  const pathParts = path.split('/');
+
+  // For URLs like /search/a?searchtype=Y&searcharg=health&searchscope=12&SORT=D
+  if (typeof qs.searcharg === 'string') {
+    return wellcomeCollectionRedirect(`/works?query=${qs.searcharg}`);
+  }
+
+  // For URLs like /search/o44843i
+  if (pathParts.length >= 3 && pathParts[2].match(/^o[0-9]+i$/)) {
+    return wellcomeCollectionRedirect(`/works?query=${pathParts[1].slice(1)}`);
+  }
+
+  // If we've matched nothing we redirect to the top-level collections page
+  //
+  // Note that some of the query string values in OPAC are v weird, so we cast to JSON
+  // before string interpolating to avoid type errors.
+  console.warn(
+    `Could not extract search term from path=${path}, qs=${JSON.stringify(qs)}`
+  );
+  return wellcomeCollectionRedirect('/collections/');
+}
 
 export const requestHandler = async (
   event: CloudFrontRequestEvent,
@@ -14,7 +41,7 @@ export const requestHandler = async (
   const qs: querystring.ParsedUrlQuery = querystring.parse(request.querystring);
 
   if (path.startsWith('/search')) {
-    console.log(`@@AWLC ${JSON.stringify(qs)}`);
+    return getSearchRedirect(path, qs);
   }
 
   // https://catalogue.wellcomelibrary.org/
