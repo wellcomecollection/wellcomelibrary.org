@@ -10,7 +10,7 @@ test('redirects blog. to the wayback machine', () => {
   const request = testRequest({
     uri: expectedPath,
     headers: {
-      host: [{ key: 'host', value: 'blog.wellcomelibrary.org' }],
+      host: 'blog.wellcomelibrary.org',
     },
   });
 
@@ -47,7 +47,7 @@ test('errors if host header has incorrect value', () => {
   const request = testRequest({
     uri: expectedPath,
     headers: {
-      host: [{ key: 'host', value: 'catalogue.wellcomelibrary.org' }],
+      host: 'catalogue.wellcomelibrary.org',
     },
   });
   const resultPromise = origin.requestHandler(request, {} as Context);

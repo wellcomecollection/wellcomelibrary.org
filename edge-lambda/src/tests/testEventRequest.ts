@@ -10,22 +10,50 @@ export const createCloudFrontRequestEvent = ({
 }: {
   uri: string;
   querystring?: string;
-  headers?: CloudFrontHeaders;
-}): CloudFrontRequestEvent => ({
-  Records: [
-    {
-      cf: {
-        config: {
-          distributionId: 'EXAMPLE',
-          distributionDomainName: '',
-          requestId: '',
-          eventType: 'origin-request',
+  headers?: {
+    host?: string;
+    protocol?: string;
+  };
+}): CloudFrontRequestEvent => {
+  const hostHeader: CloudFrontHeaders =
+    typeof headers.host === 'string'
+      ? { host: [{ key: 'host', value: headers.host }] }
+      : {};
+
+  const protoHeader: CloudFrontHeaders =
+    typeof headers.protocol === 'string'
+      ? {
+          'cloudfront-forwarded-proto': [
+            { key: 'cloudfront-forwarded-proto', value: headers.protocol },
+          ],
+        }
+      : {};
+
+  const cloudfrontHeaders = {
+    ...hostHeader,
+    ...protoHeader,
+  };
+
+  return {
+    Records: [
+      {
+        cf: {
+          config: {
+            distributionId: 'EXAMPLE',
+            distributionDomainName: '',
+            requestId: '',
+            eventType: 'origin-request',
+          },
+          request: createCloudFrontRequest({
+            uri,
+            querystring,
+            headers: cloudfrontHeaders,
+          }),
         },
-        request: createCloudFrontRequest({ uri, querystring, headers }),
       },
-    },
-  ],
-});
+    ],
+  };
+};
 
 export const createCloudFrontRequest = ({
   uri,

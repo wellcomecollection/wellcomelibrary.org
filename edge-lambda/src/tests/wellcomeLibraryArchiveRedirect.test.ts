@@ -11,10 +11,8 @@ jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
 const archivedHeaders = {
-  host: [{ key: 'host', value: 'archives.wellcomelibrary.org' }],
-  'cloudfront-forwarded-proto': [
-    { key: 'cloudfront-forwarded-proto', value: 'https' },
-  ],
+  host: 'archives.wellcomelibrary.org',
+  protocol: 'https',
 };
 
 type Test = {

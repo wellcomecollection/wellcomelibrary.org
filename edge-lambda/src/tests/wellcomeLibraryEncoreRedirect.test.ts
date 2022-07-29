@@ -11,10 +11,8 @@ jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
 const encoreHeaders = {
-  host: [{ key: 'host', value: 'search.wellcomelibrary.org' }],
-  'cloudfront-forwarded-proto': [
-    { key: 'cloudfront-forwarded-proto', value: 'https' },
-  ],
+  host: 'search.wellcomelibrary.org',
+  protocol: 'https',
 };
 
 type Test = {

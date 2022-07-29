@@ -23,10 +23,8 @@ test('redirects www. to root', () => {
   const request = testRequest({
     uri: '/foo',
     headers: {
-      host: [{ key: 'host', value: 'www.wellcomelibrary.org' }],
-      'cloudfront-forwarded-proto': [
-        { key: 'cloudfront-forwarded-proto', value: 'https' },
-      ],
+      host: 'www.wellcomelibrary.org',
+      protocol: 'https',
     },
   });
 
@@ -41,10 +39,8 @@ test('http requests are redirected to https', () => {
   const request = testRequest({
     uri: '/foo',
     headers: {
-      host: [{ key: 'host', value: 'wellcomelibrary.org' }],
-      'cloudfront-forwarded-proto': [
-        { key: 'cloudfront-forwarded-proto', value: 'http' },
-      ],
+      host: 'wellcomelibrary.org',
+      protocol: 'http',
     },
   });
 
@@ -268,7 +264,7 @@ test('redirects unknown paths to wellcomecollection.org', async () => {
   const request = testRequest({
     uri: '/unspecifiedPath',
     headers: {
-      host: [{ key: 'host', value: 'wellcomelibrary.org' }],
+      host: 'wellcomelibrary.org',
     },
   });
 
