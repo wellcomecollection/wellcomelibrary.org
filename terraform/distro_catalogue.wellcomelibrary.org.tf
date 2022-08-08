@@ -10,10 +10,6 @@ locals {
 module "wellcomelibrary_catalogue_redirects" {
   source = "./modules/cloudfront_redirects"
 
-  # This isn't enabled yet; see
-  # https://github.com/wellcomecollection/platform/issues/5580
-  disable_prod_redirect = true
-
   prod_domain_name   = "catalogue.wellcomelibrary.org"
   stage_domain_name  = "catalogue.stage.wellcomelibrary.org"
   origin_domain_name = "catalogue.origin.wellcomelibrary.org"
@@ -27,33 +23,6 @@ module "wellcomelibrary_catalogue_redirects" {
   providers = {
     aws.dns = aws.dns
   }
-}
-
-# These will have to be removed when we enable redirects in prod, or the
-# DNS record for the redirect will conflict with this one.
-resource "aws_route53_record" "ssl-verification" {
-  zone_id = data.aws_route53_zone.zone.id
-  name    = "catalogue.wellcomelibrary.org"
-  type    = "TXT"
-
-  records = [
-    "_globalsign-domain-verification=_A6r614XUdcIgrW3d1GFKk43OcpJcBXjPnYFduVp4g",
-    "_globalsign-domain-verification=6FY5rs1kI5Q06ydBA6v1EjeO8jjWPwtRUgA-yipeXT"
-  ]
-
-  ttl      = "60"
-  provider = aws.dns
-}
-
-resource "aws_route53_record" "opac-prod" {
-  zone_id = data.aws_route53_zone.zone.id
-  name    = "catalogue.wellcomelibrary.org"
-  type    = "A"
-
-  records = [local.opac_ip_address]
-  ttl     = "60"
-
-  provider = aws.dns
 }
 
 resource "aws_route53_record" "opac-origin" {
