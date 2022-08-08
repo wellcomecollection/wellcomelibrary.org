@@ -29,15 +29,29 @@ module "wellcomelibrary_catalogue_redirects" {
   }
 }
 
-# This will have to be removed when we enable redirects in prod, or the
+# These will have to be removed when we enable redirects in prod, or the
 # DNS record for the redirect will conflict with this one.
+resource "aws_route53_record" "ssl-verification" {
+  zone_id = data.aws_route53_zone.zone.id
+  name    = "catalogue.wellcomelibrary.org"
+  type    = "TXT"
+
+  records = [
+    "_globalsign-domain-verification=_A6r614XUdcIgrW3d1GFKk43OcpJcBXjPnYFduVp4g",
+    "_globalsign-domain-verification=6FY5rs1kI5Q06ydBA6v1EjeO8jjWPwtRUgA-yipeXT"
+  ]
+
+  ttl      = "60"
+  provider = aws.dns
+}
+
 resource "aws_route53_record" "opac-prod" {
   zone_id = data.aws_route53_zone.zone.id
   name    = "catalogue.wellcomelibrary.org"
   type    = "A"
 
   records = [local.opac_ip_address]
-  ttl     = "300"
+  ttl     = "60"
 
   provider = aws.dns
 }
