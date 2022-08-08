@@ -240,6 +240,7 @@ const catalogueTestSet = {
   headers: ['sourceUrl', 'targetUrl'],
   envs: {
     stage: 'https://catalogue.stage.wellcomelibrary.org',
+    prod: 'https://catalogue.wellcomelibrary.org',
   },
   checkRedirect: checkMatchingUrl,
 };
