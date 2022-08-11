@@ -36,7 +36,7 @@ It includes the code for redirecting users from the old site to the appropriate 
 
 *   `search.wellcomelibrary.org` was a web front-end for the library catalogue/Sierra, powered by an application called Encore.
     As of January 2022, we are not redirecting Encore URLs.
-    We will eventually redirect requests to the Works pages on the new website.
+    We redirect requests to the new website.
 
     Encore was also available at `wellcomelibrary.org` (no subdomain).
 
@@ -45,7 +45,9 @@ It includes the code for redirecting users from the old site to the appropriate 
     </a>
 
 *   `catalogue.wellcomelibrary.org` was another web front-end for the library catalogue/Sierra, often referred to as the OPAC ([online public access catalogue][opac]) or WebPAC.
-    As of January 2022, we are not redirecting OPAC URLs, and we have no immediate plans to do so.
+    
+    We redirect requests to the new website, but only for external users.
+    OPAC has some staff-specific functionality that we want to retain, so staff can still use it with the on-site network or the GlobalProtect VPN.
 
     <a href="screenshots/catalogue.wl.org-screenshot.png">
       <img src="screenshots/catalogue.wl.org-thumbnail.png" alt="Screenshot of catalogue.wellcomelibrary.org">
