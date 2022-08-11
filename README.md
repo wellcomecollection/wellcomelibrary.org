@@ -35,7 +35,6 @@ It includes the code for redirecting users from the old site to the appropriate 
     </a>
 
 *   `search.wellcomelibrary.org` was a web front-end for the library catalogue/Sierra, powered by an application called Encore.
-    As of January 2022, we are not redirecting Encore URLs.
     We redirect requests to the new website.
 
     Encore was also available at `wellcomelibrary.org` (no subdomain).
