@@ -35,3 +35,14 @@ resource "aws_route53_record" "opac-origin" {
 
   provider = aws.dns
 }
+
+resource "aws_route53_record" "test-catalogue" {
+  zone_id = data.aws_route53_zone.zone.id
+  name    = "*.catalogue.wellcomelibrary.org"
+  type    = "A"
+
+  records = [local.opac_ip_address]
+  ttl     = "60"
+
+  provider = aws.dns
+}
