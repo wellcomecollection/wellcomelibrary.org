@@ -8,6 +8,9 @@ locals {
   # This is for consistency with the DNS records that we do manage, and to
   # give us a bit of a safety net -- if we inadvertently blat a DNS record
   # as part of our changes, we should be able to roll it back.
+  #
+  # We may be able to remove these records in consultation with LS&S, if
+  # we know the records are defunct.
 
   cname_records = {
    "www.wellcomelibrary.org" = "wellcomelibrary.org"
