@@ -25,13 +25,18 @@ locals {
 
   a_records = {
     "encore.wellcomelibrary.org"           = "35.176.25.168"
-    "libsys.wellcomelibrary.org"           = "195.143.129.134"
     "localhost.wellcomelibrary.org"        = "127.0.0.1"
     "origin.wellcomelibrary.org"           = "195.143.129.236"
     "print.wellcomelibrary.org"            = "195.143.129.141"
     "support.wellcomelibrary.org"          = "54.75.184.123"
     "support02.wellcomelibrary.org"        = "34.251.227.203"
     "wt-lon-sierrasso.wellcomelibrary.org" = "195.143.129.211"
+
+    # This is the IP address for the "Sierra Production App Server", as
+    # hosted on III infrastructure.
+    #
+    # It was sent in an email from LSS to Alex Chan, dated 30 August 2022.
+    "libsys.wellcomelibrary.org" = "18.130.128.205"
   }
 
   mx_records = {
