@@ -13,14 +13,14 @@ locals {
   # we know the records are defunct.
 
   cname_records = {
-   "www.wellcomelibrary.org" = "wellcomelibrary.org"
+    "www.wellcomelibrary.org" = "wellcomelibrary.org"
 
-   "stage.wellcomelibrary.org"     = module.wellcomelibrary-stage.distro_domain_name
-   "www.stage.wellcomelibrary.org" = module.wellcomelibrary-stage.distro_domain_name
+    "stage.wellcomelibrary.org"     = module.wellcomelibrary-stage.distro_domain_name
+    "www.stage.wellcomelibrary.org" = module.wellcomelibrary-stage.distro_domain_name
 
-   "deposit.wellcomelibrary.org" = "wt-hamilton.wellcome.ac.uk."
+    "deposit.wellcomelibrary.org" = "wt-hamilton.wellcome.ac.uk."
 
-   "styleguide.wellcomelibrary.org" = "weblb01-1646100330.eu-west-1.elb.amazonaws.com."
+    "styleguide.wellcomelibrary.org" = "weblb01-1646100330.eu-west-1.elb.amazonaws.com."
   }
 
   a_records = {
