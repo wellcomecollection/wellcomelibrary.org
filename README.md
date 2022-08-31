@@ -46,7 +46,7 @@ It also includes all the DNS records for the `wellcomelibrary.org` domain.
     </a>
 
 *   `catalogue.wellcomelibrary.org` was another web front-end for the library catalogue/Sierra, often referred to as the OPAC ([online public access catalogue][opac]) or WebPAC.
-    
+
     We redirect requests to the new website, but only for external users.
     OPAC has some staff-specific functionality that we want to retain, so staff can still use it with the on-site network or the GlobalProtect VPN.
 
@@ -63,6 +63,8 @@ It also includes all the DNS records for the `wellcomelibrary.org` domain.
 
 *   `wellcomelibrary.org/iiif` and other paths (e.g. `/service/alto`) were IIIF services, including a IIIF Image API and IIIF presentation API.
     These services are now served from `iiif.wc.org`, and we redirect any requests for the old URLs to the new URLs.
+
+*   `libsys.wellcomelibrary.org` is the domain for the Sierra API, which is used (among other things) to populate the collections search on wc.org, and power item requesting on wc.org.
 
 [opac]: https://en.wikipedia.org/wiki/Online_public_access_catalog
 
