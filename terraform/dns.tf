@@ -39,12 +39,29 @@ resource "aws_route53_record" "prod-cloudfront" {
 locals {
   cname_records = {
    "www.wellcomelibrary.org" = "wellcomelibrary.org"
+
+   "stage.wellcomelibrary.org"     = module.wellcomelibrary-stage.distro_domain_name
+   "www.stage.wellcomelibrary.org" = module.wellcomelibrary-stage.distro_domain_name
+  }
+
+  a_records = {
+    "origin.wellcomelibrary.org" = "195.143.129.236"
   }
 }
 
 moved {
   from = aws_route53_record.www
   to   = aws_route53_record.cname["www.wellcomelibrary.org"]
+}
+
+moved {
+  from = aws_route53_record.stage
+  to   = aws_route53_record.cname["stage.wellcomelibrary.org"]
+}
+
+moved {
+  from = aws_route53_record.stage-www
+  to   = aws_route53_record.cname["www.stage.wellcomelibrary.org"]
 }
 
 resource "aws_route53_record" "cname" {
@@ -54,37 +71,24 @@ resource "aws_route53_record" "cname" {
   name    = each.key
   type    = "CNAME"
   records = [each.value]
-  ttl     = "60"
+  ttl     = 60
 
   provider = aws.dns
 }
 
-resource "aws_route53_record" "origin" {
+moved {
+  from = aws_route53_record.origin
+  to   = aws_route53_record.a["origin.wellcomelibrary.org"]
+}
+
+resource "aws_route53_record" "a" {
+  for_each = local.a_records
+
   zone_id = data.aws_route53_zone.zone.id
-  name    = "origin.wellcomelibrary.org"
+  name    = each.key
   type    = "A"
-  records = ["195.143.129.236"]
-  ttl     = "300"
-
-  provider = aws.dns
-}
-
-resource "aws_route53_record" "stage" {
-  zone_id = data.aws_route53_zone.zone.id
-  name    = "stage.wellcomelibrary.org"
-  type    = "CNAME"
-  records = [module.wellcomelibrary-stage.distro_domain_name]
-  ttl     = "300"
-
-  provider = aws.dns
-}
-
-resource "aws_route53_record" "stage-www" {
-  zone_id = data.aws_route53_zone.zone.id
-  name    = "www.stage.wellcomelibrary.org"
-  type    = "CNAME"
-  records = [module.wellcomelibrary-stage.distro_domain_name]
-  ttl     = "60"
+  records = [each.value]
+  ttl     = 60
 
   provider = aws.dns
 }
