@@ -36,11 +36,24 @@ resource "aws_route53_record" "prod-cloudfront" {
   provider = aws.dns
 }
 
-resource "aws_route53_record" "www" {
+locals {
+  cname_records = {
+   "www.wellcomelibrary.org" = "wellcomelibrary.org"
+  }
+}
+
+moved {
+  from = aws_route53_record.www
+  to   = aws_route53_record.cname["www.wellcomelibrary.org"]
+}
+
+resource "aws_route53_record" "cname" {
+  for_each = local.cname_records
+
   zone_id = data.aws_route53_zone.zone.id
-  name    = "www.wellcomelibrary.org"
+  name    = each.key
   type    = "CNAME"
-  records = ["wellcomelibrary.org"]
+  records = [each.value]
   ttl     = "60"
 
   provider = aws.dns
