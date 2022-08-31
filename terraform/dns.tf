@@ -1,4 +1,14 @@
 locals {
+  # Most of this block is a collection of DNS records that were in-place
+  # before the platform team existed, most of which we don't actively manage.
+  #
+  # Many of these records may be defunct; we captured them in Terraform
+  # in August 2022 so we had *a* snapshot of what these DNS records look like.
+  #
+  # This is for consistency with the DNS records that we do manage, and to
+  # give us a bit of a safety net -- if we inadvertently blat a DNS record
+  # as part of our changes, we should be able to roll it back.
+
   cname_records = {
    "www.wellcomelibrary.org" = "wellcomelibrary.org"
 
@@ -6,6 +16,8 @@ locals {
    "www.stage.wellcomelibrary.org" = module.wellcomelibrary-stage.distro_domain_name
 
    "deposit.wellcomelibrary.org" = "wt-hamilton.wellcome.ac.uk."
+
+   "styleguide.wellcomelibrary.org" = "weblb01-1646100330.eu-west-1.elb.amazonaws.com."
   }
 
   a_records = {
@@ -17,6 +29,34 @@ locals {
     "support.wellcomelibrary.org"          = "54.75.184.123"
     "support02.wellcomelibrary.org"        = "34.251.227.203"
     "wt-lon-sierrasso.wellcomelibrary.org" = "195.143.129.211"
+  }
+
+  mx_records = {
+    "wellcomelibrary.org" = "0 wellcome-ac-uk.mail.protection.outlook.com"
+  }
+
+  ns_records = [
+    "ns-1875.awsdns-42.co.uk.",
+    "ns-574.awsdns-07.net.",
+    "ns-337.awsdns-42.com.",
+    "ns-1041.awsdns-02.org.",
+  ]
+
+  soa_records = {
+    "wellcomelibrary.org" = "ns-1875.awsdns-42.co.uk. awsdns-hostmaster.amazon.com. 1 7200 900 1209600 86400"
+  }
+
+  spf_records = [
+    "v=spf1 include:spf.protection.outlook.com -all",
+    "_globalsign-domain-verification=_oCvlC-4KkZ2udpJVZJtGuh7fNyu3K_ctmFQ4PPTXb",
+    "_globalsign-domain-verification=vu-ONisR1AncBASgChXZgIHSOoEQ0VRpwPeTWE13XW",
+    "C5Gnoujowp06bvP0R9XFqRxveoG80XT2kEy58fJBkEU=",
+    "_globalsign-domain-verification=mAFp_6t1sYlUNXcKKfhI6wI-uF6BRFdqcaX1E-CQLv",
+  ]
+
+  txt_records = {
+    "@.wellcomelibrary.org"               = "y/k5s8yhrhyvygnz1mqeiqrr6y7yfydlkqx0ew26fgmijc2clcfzhahpm3sabpagex5+kosi5ihkczazqx1iba=="
+    "_pki-validation.wellcomelibrary.org" = "C6D9-B435-F4B2-F818-47AB-A4EB-E8E7-71D4"
   }
 }
 
@@ -95,6 +135,62 @@ resource "aws_route53_record" "a" {
   type    = "A"
   records = [each.value]
   ttl     = 60
+
+  provider = aws.dns
+}
+
+resource "aws_route53_record" "txt" {
+  for_each = local.txt_records
+
+  zone_id = data.aws_route53_zone.zone.id
+  name    = each.key
+  type    = "TXT"
+  records = [each.value]
+  ttl     = 60
+
+  provider = aws.dns
+}
+
+resource "aws_route53_record" "soa" {
+  for_each = local.soa_records
+
+  zone_id = data.aws_route53_zone.zone.id
+  name    = each.key
+  type    = "SOA"
+  records = [each.value]
+  ttl     = 900
+
+  provider = aws.dns
+}
+
+resource "aws_route53_record" "mx" {
+  for_each = local.mx_records
+
+  zone_id = data.aws_route53_zone.zone.id
+  name    = each.key
+  type    = "MX"
+  records = [each.value]
+  ttl     = 300
+
+  provider = aws.dns
+}
+
+resource "aws_route53_record" "ns" {
+  zone_id = data.aws_route53_zone.zone.id
+  name    = "wellcomelibrary.org"
+  type    = "NS"
+  records = local.ns_records
+  ttl     = 172800
+
+  provider = aws.dns
+}
+
+resource "aws_route53_record" "spf" {
+  zone_id = data.aws_route53_zone.zone.id
+  name    = "wellcomelibrary.org"
+  type    = "TXT"
+  records = local.spf_records
+  ttl     = 300
 
   provider = aws.dns
 }
