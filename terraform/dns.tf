@@ -1,3 +1,25 @@
+locals {
+  cname_records = {
+   "www.wellcomelibrary.org" = "wellcomelibrary.org"
+
+   "stage.wellcomelibrary.org"     = module.wellcomelibrary-stage.distro_domain_name
+   "www.stage.wellcomelibrary.org" = module.wellcomelibrary-stage.distro_domain_name
+
+   "deposit.wellcomelibrary.org" = "wt-hamilton.wellcome.ac.uk."
+  }
+
+  a_records = {
+    "encore.wellcomelibrary.org"           = "35.176.25.168"
+    "libsys.wellcomelibrary.org"           = "195.143.129.134"
+    "localhost.wellcomelibrary.org"        = "127.0.0.1"
+    "origin.wellcomelibrary.org"           = "195.143.129.236"
+    "print.wellcomelibrary.org"            = "195.143.129.141"
+    "support.wellcomelibrary.org"          = "54.75.184.123"
+    "support02.wellcomelibrary.org"        = "34.251.227.203"
+    "wt-lon-sierrasso.wellcomelibrary.org" = "195.143.129.211"
+  }
+}
+
 resource "aws_route53_record" "prod-internal" {
   zone_id = data.aws_route53_zone.zone.id
   name    = "wellcomelibrary.org"
@@ -36,17 +58,21 @@ resource "aws_route53_record" "prod-cloudfront" {
   provider = aws.dns
 }
 
-locals {
-  cname_records = {
-   "www.wellcomelibrary.org" = "wellcomelibrary.org"
+resource "aws_route53_record" "alpha" {
+  zone_id = data.aws_route53_zone.zone.id
+  name    = "alpha.wellcomelibrary.org"
+  type    = "A"
 
-   "stage.wellcomelibrary.org"     = module.wellcomelibrary-stage.distro_domain_name
-   "www.stage.wellcomelibrary.org" = module.wellcomelibrary-stage.distro_domain_name
+  alias {
+    name                   = "s3-website-eu-west-1.amazonaws.com"
+    evaluate_target_health = true
+
+    # This is a fixed value for S3 websites, see
+    # https://docs.aws.amazon.com/general/latest/gr/s3.html#s3_website_region_endpoints
+    zone_id = "Z1BKCTXD74EZPE"
   }
 
-  a_records = {
-    "origin.wellcomelibrary.org" = "195.143.129.236"
-  }
+  provider = aws.dns
 }
 
 resource "aws_route53_record" "cname" {
