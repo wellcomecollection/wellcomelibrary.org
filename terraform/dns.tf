@@ -49,21 +49,6 @@ locals {
   }
 }
 
-moved {
-  from = aws_route53_record.www
-  to   = aws_route53_record.cname["www.wellcomelibrary.org"]
-}
-
-moved {
-  from = aws_route53_record.stage
-  to   = aws_route53_record.cname["stage.wellcomelibrary.org"]
-}
-
-moved {
-  from = aws_route53_record.stage-www
-  to   = aws_route53_record.cname["www.stage.wellcomelibrary.org"]
-}
-
 resource "aws_route53_record" "cname" {
   for_each = local.cname_records
 
@@ -74,11 +59,6 @@ resource "aws_route53_record" "cname" {
   ttl     = 60
 
   provider = aws.dns
-}
-
-moved {
-  from = aws_route53_record.origin
-  to   = aws_route53_record.a["origin.wellcomelibrary.org"]
 }
 
 resource "aws_route53_record" "a" {
