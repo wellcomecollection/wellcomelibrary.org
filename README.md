@@ -5,6 +5,8 @@
 This is the CloudFront distribution for the old `wellcomelibrary.org` website.
 It includes the code for redirecting users from the old site to the appropriate `wellcomecollection.org` URL.
 
+It also includes all the DNS records for the `wellcomelibrary.org` domain.
+
 ## Key pieces
 
 *   The CloudFront distributions are in the platform account.
