@@ -18,11 +18,10 @@ test('returns a valid redirect', async () => {
         },
       ],
     },
-    status: '302',
+    status: '301',
     statusDescription: 'Redirecting to http://www.example.com/bar',
   } as CloudFrontResultResponse;
 
-  // Temporary redirect should be updated to permanent when redirections are stable
   expect(lookupResult).toStrictEqual(expectedRedirect);
 });
 
@@ -42,11 +41,10 @@ test('strips trailing slashes', async () => {
         },
       ],
     },
-    status: '302',
+    status: '301',
     statusDescription: 'Redirecting to http://www.example.com/bar',
   } as CloudFrontResultResponse;
 
-  // Temporary redirect should be updated to permanent when redirections are stable
   expect(lookupResult).toStrictEqual(expectedRedirect);
 });
 
@@ -56,6 +54,5 @@ test('returns undefined when no redirect available', async () => {
     '/baz'
   );
 
-  // Temporary redirect should be updated to permanent when redirections are stable
   expect(lookupResult).toBe(undefined);
 });

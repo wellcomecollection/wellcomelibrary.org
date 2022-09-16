@@ -7,8 +7,7 @@ test('returns a valid redirect', () => {
     new URL('https://www.example.com')
   );
 
-  // Temporary redirect should be updated to permanent when redirections are stable
-  expect(redirect.status).toEqual('302');
+  expect(redirect.status).toEqual('301');
   const headers = redirect.headers;
   expect(headers).toEqual({
     location: [
