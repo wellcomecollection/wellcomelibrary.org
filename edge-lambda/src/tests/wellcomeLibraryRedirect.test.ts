@@ -270,7 +270,7 @@ test('redirects unknown paths to wellcomecollection.org', async () => {
 
   const originRequest = await origin.requestHandler(request, {} as Context);
 
-  expect(originRequest.status).toStrictEqual('302');
+  expect(originRequest.status).toStrictEqual('301');
   expect(originRequest.headers).toStrictEqual({
     'access-control-allow-origin': [
       { key: 'Access-Control-Allow-Origin', value: '*' },

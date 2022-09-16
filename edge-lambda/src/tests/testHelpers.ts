@@ -15,7 +15,7 @@ export function expectedServerError(
 
 export function expectedRedirect(uri: string): CloudFrontResultResponse {
   return {
-    status: '302',
+    status: '301',
     statusDescription: `Redirecting to ${uri}`,
     headers: {
       location: [

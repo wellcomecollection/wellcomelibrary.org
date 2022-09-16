@@ -35,7 +35,7 @@ export function createRedirect(url: URL) {
   const headers = { ...locationHeaders, ...corsHeaders };
 
   return {
-    status: '302',
+    status: '301',
     statusDescription: `Redirecting to ${url}`,
     headers: headers,
   } as CloudFrontResultResponse;
