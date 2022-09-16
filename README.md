@@ -54,7 +54,7 @@ It also includes all the DNS records for the `wellcomelibrary.org` domain.
       <img src="screenshots/catalogue.wl.org-thumbnail.png" alt="Screenshot of catalogue.wellcomelibrary.org">
     </a>
 
-*   `wellcomelibrary.org/moh` is a standalone application for browsing the Medical Officer of Health reports.
+*   `wellcomelibrary.org/moh/` is a standalone application for browsing the Medical Officer of Health reports.
     The associated GitHub repo is [wellcomecollection/londons-pulse](https://github.com/wellcomecollection/londons-pulse).
 
     <a href="screenshots/moh-screenshot.png">
