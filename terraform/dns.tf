@@ -63,8 +63,10 @@ locals {
   ]
 
   txt_records = {
-    "@.wellcomelibrary.org"               = "y/k5s8yhrhyvygnz1mqeiqrr6y7yfydlkqx0ew26fgmijc2clcfzhahpm3sabpagex5+kosi5ihkczazqx1iba=="
-    "_pki-validation.wellcomelibrary.org" = "C6D9-B435-F4B2-F818-47AB-A4EB-E8E7-71D4"
+    "@.wellcomelibrary.org" = "y/k5s8yhrhyvygnz1mqeiqrr6y7yfydlkqx0ew26fgmijc2clcfzhahpm3sabpagex5+kosi5ihkczazqx1iba=="
+
+    # This value was sent by Slack from Flavio V on 17 May 2023
+    "_pki-validation.wellcomelibrary.org" = "19FA-9346-DF91-EF98-FB22-DA70-C569-A88E"
   }
 }
 
