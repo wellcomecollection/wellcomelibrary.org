@@ -65,8 +65,8 @@ locals {
   txt_records = {
     "@.wellcomelibrary.org" = "y/k5s8yhrhyvygnz1mqeiqrr6y7yfydlkqx0ew26fgmijc2clcfzhahpm3sabpagex5+kosi5ihkczazqx1iba=="
 
-    # This value was sent by Slack from Flavio V on 17 May 2023
-    "_pki-validation.wellcomelibrary.org" = "19FA-9346-DF91-EF98-FB22-DA70-C569-A88E"
+    # This value was sent by Slack from Flavio V on 11 June 2024
+    "_pki-validation.wellcomelibrary.org" = "4BC7-9858-1376-FF06-DA6A-241D-9F06-F452"
   }
 }
 
