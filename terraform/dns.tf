@@ -21,6 +21,10 @@ locals {
     "deposit.wellcomelibrary.org" = "wt-hamilton.wellcome.ac.uk."
 
     "styleguide.wellcomelibrary.org" = "weblb01-1646100330.eu-west-1.elb.amazonaws.com."
+
+    # Sectigo domain name validation records
+    # Sent by Flavio V 29 October 2024
+    "_7c0ad5539ffa30ea5ec245e2a0bafae8.wellcomelibrary.org" = "d8bee243be7bad3b187120d52975a807.7aad28fde9eebc5586ae99ca8ab05a6c.sectigo.com"
   }
 
   a_records = {
@@ -31,12 +35,6 @@ locals {
     "support.wellcomelibrary.org"          = "54.75.184.123"
     "support02.wellcomelibrary.org"        = "34.251.227.203"
     "wt-lon-sierrasso.wellcomelibrary.org" = "195.143.129.211"
-
-    # This is the IP address for the "Sierra Production App Server", as
-    # hosted on III infrastructure.
-    #
-    # It was sent in an email from LSS to Alex Chan, dated 30 August 2022.
-    "libsys.wellcomelibrary.org" = "18.130.128.205"
   }
 
   mx_records = {
