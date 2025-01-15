@@ -1,4 +1,5 @@
 import { CloudFrontResultResponse } from 'aws-lambda/common/cloudfront';
+import { URL } from 'url'
 import { getWork } from './bnumberToWork';
 import { GetBNumberResult } from './paths';
 

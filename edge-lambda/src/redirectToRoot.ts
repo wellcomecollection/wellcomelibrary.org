@@ -1,4 +1,5 @@
 import { CloudFrontRequest } from 'aws-lambda/common/cloudfront';
+import { URL } from 'url'
 import { createRedirect } from './redirectHelpers';
 
 type Scheme = 'https' | 'http';

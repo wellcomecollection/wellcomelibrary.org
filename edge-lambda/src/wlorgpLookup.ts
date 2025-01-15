@@ -1,4 +1,5 @@
 import { safeGet } from './safeGet';
+import { URL } from 'url'
 
 const apiBasePath = 'https://iiif.wellcomecollection.org/wlorgp';
 

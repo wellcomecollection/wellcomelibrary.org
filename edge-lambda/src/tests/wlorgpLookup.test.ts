@@ -1,4 +1,5 @@
 import { expect, test, jest, afterEach } from '@jest/globals';
+import { URL } from 'url'
 import { safeGet } from '../safeGet';
 
 import { wlorgpLookup } from '../wlorgpLookup';
