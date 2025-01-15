@@ -1,6 +1,7 @@
 import * as origin from '../wellcomeLibraryRedirect';
 import testRequest from './testEventRequest';
 import { Context } from 'aws-lambda';
+import { URL } from 'url'
 import {
   testDataNoResults,
   testDataSingleResult,
@@ -222,7 +223,7 @@ test.each(rewriteTests())(
               statusText: 'OK',
               headers: {},
               config: {},
-            } as AxiosResponse;
+            } as any;
           }
         );
       });

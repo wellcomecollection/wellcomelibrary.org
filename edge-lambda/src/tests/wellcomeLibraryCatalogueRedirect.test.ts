@@ -15,6 +15,8 @@ const opacHeaders = {
   protocol: 'https',
 };
 
+type TestCase = Test | string
+
 type Test = {
   path: string;
   qs?: string;
@@ -230,20 +232,22 @@ const opacTests = rootTest
   .concat(fallbackTest)
   .concat(robotsTest);
 
-test.each(opacTests)('%s', (name: string, test: Test) => {
-  const request = testRequest({
-    uri: test.path,
-    querystring: test.qs,
-    headers: opacHeaders,
-  });
-
-  test.results &&
-    mockedAxios.get.mockResolvedValue({
-      data: test.results,
+test.each(opacTests)('%s', (name: TestCase, test: TestCase) => {
+  if (typeof test !== "string") {
+    const request = testRequest({
+      uri: test.path,
+      querystring: test.qs,
+      headers: opacHeaders,
     });
-
-  const resultPromise = origin.requestHandler(request, {} as Context);
-  return expect(resultPromise).resolves.toEqual(
-    expectedRedirect(test.resolvedUri)
-  );
+  
+    test.results &&
+      mockedAxios.get.mockResolvedValue({
+        data: test.results,
+      });
+  
+    const resultPromise = origin.requestHandler(request, {} as Context);
+    return expect(resultPromise).resolves.toEqual(
+      expectedRedirect(test.resolvedUri)
+    );
+  }
 });
