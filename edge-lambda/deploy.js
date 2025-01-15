@@ -1,6 +1,6 @@
 const zipLocation = 'dist/wellcome_library_redirect.zip';
 const s3Bucket = 'wellcomecollection-edge-lambdas';
-const s3Key = 'wellcome_library/wellcome_library_redirect_test.zip';
+const s3Key = 'wellcome_library/wellcome_library_redirect.zip';
 const roleArn = 'arn:aws:iam::760097843905:role/platform-ci';
 
 const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3")
