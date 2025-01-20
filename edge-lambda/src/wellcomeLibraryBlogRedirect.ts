@@ -1,4 +1,5 @@
 import { CloudFrontRequest } from 'aws-lambda/common/cloudfront';
+import { URL } from 'url'
 import { createRedirect, createServerError } from './redirectHelpers';
 import { CloudFrontRequestEvent, Context } from 'aws-lambda';
 

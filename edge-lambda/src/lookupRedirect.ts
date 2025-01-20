@@ -1,4 +1,5 @@
 import { CloudFrontResultResponse } from 'aws-lambda';
+import { URL } from 'url'
 import { createRedirect } from './redirectHelpers';
 
 export function lookupRedirect(

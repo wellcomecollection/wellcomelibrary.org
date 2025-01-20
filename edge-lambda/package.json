@@ -3,14 +3,14 @@
   "version": "1.0.0",
   "main": "index.js",
   "engines": {
-    "node": "16.*.*"
+    "node": "20.*.*"
   },
   "license": "MIT",
   "scripts": {
     "test": "yarn jest --silent && yarn verifyStaticRedirects",
     "lint": "eslint src/**/*.ts --fix && eslint *.ts --fix",
-    "build": "yarn generateStaticRedirects && tsc -p tsconfig.build.json && yarn bundle ",
-    "bundle": "cp package.json dist && cd dist && yarn install --production && zip -r wellcome_library_redirect.zip . && cd ..",
+    "build": "yarn generateStaticRedirects && ts-node -p tsconfig.build.json && yarn bundle ",
+    "bundle": "mkdir -p dist && cp package.json dist && cd dist && yarn install --production && zip -r wellcome_library_redirect.zip . && cd ..",
     "uploadToS3": "yarn build && yarn test && node deploy",
     "dockerLoginLocal": "aws ecr get-login-password --region eu-west-1 --profile platform | docker login --username AWS --password-stdin 760097843905.dkr.ecr.eu-west-1.amazonaws.com",
     "dockerBuildLocal": "yarn dockerLoginLocal && docker build . -t weli_cf_lambdas",
@@ -22,8 +22,11 @@
     "testRedirectsStage": "ts-node testRedirects.ts stage"
   },
   "devDependencies": {
+    "@aws-sdk/client-s3": "3.703.0",
+    "@aws-sdk/credential-providers": "^3.699.0",
+    "@tsconfig/node20": "20.1.4",
     "@types/aws-lambda": "^8.10.71",
-    "@types/jest": "^26.0.20",
+    "@types/jest": "^29.5.00",
     "@types/node": "^14.14.25",
     "@typescript-eslint/eslint-plugin": "^4.17.0",
     "@typescript-eslint/parser": "^4.17.0",
@@ -36,16 +39,15 @@
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-promise": "^4.3.1",
     "eslint-plugin-standard": "^5.0.0",
-    "jest": "^26.6.3",
+    "jest": "^29.5.0",
     "prettier": "^2.2.1",
-    "ts-jest": "^26.5.0",
-    "typescript": "^4.1.3",
+    "ts-jest": "^29.0.0",
+    "typescript": "^5.7.3",
     "chalk": "^4.1.0"
   },
   "dependencies": {
-    "@fast-csv/parse": "^4.3.6",
-    "aws-sdk": "^2.836.0",
-    "axios": "^0.21.1",
-    "ts-node": "^9.1.1"
+    "@fast-csv/parse": "^5.0.2",
+    "axios": "^1.6.1",
+    "ts-node": "^10.9.2"
   }
 }

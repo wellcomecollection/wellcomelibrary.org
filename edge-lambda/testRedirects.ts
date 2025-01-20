@@ -90,7 +90,7 @@ async function testRedirects(env: EnvId, redirectTestSet: RedirectTestSet) {
           to
         );
       } catch (e) {
-        redirectResult.error = e;
+        redirectResult.error = e as Error;
       }
 
       return redirectResult;

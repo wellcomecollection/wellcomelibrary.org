@@ -1,4 +1,5 @@
 import { expect, test } from '@jest/globals';
+import { URL } from 'url'
 import { createRedirect } from '../redirectHelpers';
 import { CloudFrontResultResponse } from 'aws-lambda';
 
