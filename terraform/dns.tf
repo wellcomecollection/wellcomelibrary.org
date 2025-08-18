@@ -31,7 +31,6 @@ locals {
     "encore.wellcomelibrary.org"           = "35.176.25.168"
     "localhost.wellcomelibrary.org"        = "127.0.0.1"
     "origin.wellcomelibrary.org"           = "195.143.129.236"
-    "print.wellcomelibrary.org"            = "195.143.129.141"
     "support.wellcomelibrary.org"          = "54.75.184.123"
     "support02.wellcomelibrary.org"        = "34.251.227.203"
     "wt-lon-sierrasso.wellcomelibrary.org" = "195.143.129.211"
@@ -118,6 +117,23 @@ resource "aws_route53_record" "alpha" {
     # This is a fixed value for S3 websites, see
     # https://docs.aws.amazon.com/general/latest/gr/s3.html#s3_website_region_endpoints
     zone_id = "Z1BKCTXD74EZPE"
+  }
+
+  provider = aws.dns
+}
+
+resource "aws_route53_record" "print" {
+  zone_id = data.aws_route53_zone.zone.id
+  name    = "print.wellcomelibrary.org"
+  type    = "A"
+
+  alias {
+    name                   = "wt-aws-lizard-alb-153923399.eu-west-1.elb.amazonaws.com"
+    evaluate_target_health = true
+
+    # This is a fixed value for ELBs websites, see
+    # https://docs.aws.amazon.com/general/latest/gr/elb.html
+    zone_id = "Z32O12XQLNTSW2"
   }
 
   provider = aws.dns
