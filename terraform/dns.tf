@@ -26,7 +26,7 @@ locals {
     # Sent by Flavio V 29 October 2024
     "_7c0ad5539ffa30ea5ec245e2a0bafae8.wellcomelibrary.org" = "d8bee243be7bad3b187120d52975a807.7aad28fde9eebc5586ae99ca8ab05a6c.sectigo.com"
     # Sent by Flavio V 27 October 2025
-    "_b454cb8d684ba147d6454f193f817b0c.wellcomelibrary.org" = "7621a5c71a9b6af099911bcfb318030.b0aeba595b8aa0730a2b21b4a8ccac95.sectigo.com"
+    "_b454cb8d684ba147d6454f193f817b0c.wellcomelibrary.org" = "57621a5c71a9b6af099911bcfb318030.b0aeba595b8aa0730a2b21b4a8ccac95.sectigo.com"
   }
 
   a_records = {
@@ -132,23 +132,6 @@ resource "aws_route53_record" "alpha" {
     # This is a fixed value for S3 websites, see
     # https://docs.aws.amazon.com/general/latest/gr/s3.html#s3_website_region_endpoints
     zone_id = "Z1BKCTXD74EZPE"
-  }
-
-  provider = aws.dns
-}
-
-resource "aws_route53_record" "print" {
-  zone_id = data.aws_route53_zone.zone.id
-  name    = "print.wellcomelibrary.org"
-  type    = "A"
-
-  alias {
-    name                   = "wt-aws-lizard-alb-153923399.eu-west-1.elb.amazonaws.com"
-    evaluate_target_health = true
-
-    # This is a fixed value for ELBs websites, see
-    # https://docs.aws.amazon.com/general/latest/gr/elb.html
-    zone_id = "Z32O12XQLNTSW2"
   }
 
   provider = aws.dns
