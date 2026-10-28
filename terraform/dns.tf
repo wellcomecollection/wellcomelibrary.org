@@ -66,6 +66,9 @@ locals {
 
     # This value was sent by Slack from Flavio V on 11 June 2024
     "_pki-validation.wellcomelibrary.org" = "4BC7-9858-1376-FF06-DA6A-241D-9F06-F452"
+
+    # Persistent Sectigo DCV, sent by Mark Asbrey 28 October 2026. The yearly Sectigo CNAMEs can go once this validates.
+    "_validation-persist.wellcomelibrary.org" = "sectigo.com; accounturi=acct:34801227726@sectigo.com"
   }
 }
 
