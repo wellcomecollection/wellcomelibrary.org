@@ -2,18 +2,22 @@ const zipLocation = 'dist/wellcome_library_redirect.zip';
 const s3Bucket = 'wellcomecollection-edge-lambdas';
 const s3Key = 'wellcome_library/wellcome_library_redirect.zip';
 const roleArn = 'arn:aws:iam::760097843905:role/platform-ci';
+// Lambda@Edge code lives in us-east-1; the CI container has no AWS region set.
+const region = 'us-east-1';
 
 const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3")
 const { fromTemporaryCredentials } = require("@aws-sdk/credential-providers")
 const fs = require("fs")
 
-const s3Client = new S3Client({ 
+const s3Client = new S3Client({
+  region,
   credentials: fromTemporaryCredentials({
-    params: { RoleArn: roleArn }
+    params: { RoleArn: roleArn },
+    clientConfig: { region }
   })
 });
 
-try {
+async function main() {
   const data = fs.readFileSync(zipLocation)
 
   const command = new PutObjectCommand({
@@ -24,11 +28,12 @@ try {
     ContentType: 'application/zip'
   })
 
-  s3Client.send(command, function(err, data) {
-    if (err) console.log(err, err.stack)
-    else console.log(`Finished uploading ${zipLocation} to s3://${s3Bucket}/${s3Key}`)
-  })
-
-} catch (e) {
-  console.log('Error:', e.stack);
+  const result = await s3Client.send(command)
+  console.log(`Finished uploading ${zipLocation} to s3://${s3Bucket}/${s3Key} (version ${result.VersionId})`)
 }
+
+// Fail the build step if the upload fails, rather than logging and exiting 0.
+main().catch((e) => {
+  console.error('Error:', e.stack);
+  process.exit(1);
+});
