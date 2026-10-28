@@ -29,11 +29,13 @@ async function main() {
   })
 
   const result = await s3Client.send(command)
+  // Terraform deploys by s3_object_version, so an upload without one changes nothing.
+  if (!result.VersionId) throw new Error('Upload returned no object version; is bucket versioning on?')
   console.log(`Finished uploading ${zipLocation} to s3://${s3Bucket}/${s3Key} (version ${result.VersionId})`)
 }
 
 // Fail the build step if the upload fails, rather than logging and exiting 0.
 main().catch((e) => {
-  console.error('Error:', e.stack);
+  console.error('Error:', e?.stack ?? e);
   process.exit(1);
 });
