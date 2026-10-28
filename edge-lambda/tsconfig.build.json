@@ -4,9 +4,9 @@
     "noEmit": false,
     "rootDir": "src",
     "outDir": "dist",
-    "sourceMap": true
+    "sourceMap": false
   },
   "include": ["src/**/*.ts"],
-  "exclude": ["node_modules","**/*.test.ts", "**/test_*.ts",
+  "exclude": ["node_modules","**/*.test.ts", "src/tests/**", "**/test_*.ts",
     "staticRedirects.ts", "testRedirects.ts"]
 }
