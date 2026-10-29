@@ -16,7 +16,7 @@ resource "aws_lambda_function" "redirects" {
 
   function_name = "cf_edge_wellcome_library_${each.key}"
   role          = aws_iam_role.edge_lambda_role.arn
-  runtime       = "nodejs20.x"
+  runtime       = "nodejs24.x"
   handler       = "${local.redirect_functions[each.key]}.requestHandler"
   publish       = true
 
