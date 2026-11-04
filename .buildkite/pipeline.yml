@@ -1,6 +1,6 @@
 steps:
-  - command: .buildkite/scripts/run_tf_autoformat.sh
-    label: "autoformat"
+  - command: .buildkite/scripts/format_check.sh
+    label: "format check"
 
   - wait
 
