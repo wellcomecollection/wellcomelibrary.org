@@ -1,0 +1,21 @@
+apiVersion: backplane/v1
+kind: System
+metadata:
+  name: wellcomelibrary-org
+  title: wellcomelibrary.org
+  description: Redirects from the retired Wellcome Library website to wellcomecollection.org.
+spec:
+  owner: team:digital-platform
+  lifecycle: production
+---
+apiVersion: backplane/v1
+kind: Component
+metadata:
+  name: wellcomelibrary-org-redirects
+  title: wellcomelibrary.org redirects
+  description: CloudFront distributions and Lambda@Edge functions that redirect the old wellcomelibrary.org subdomains.
+spec:
+  type: website
+  owner: team:digital-platform
+  lifecycle: production
+  system: system:wellcomelibrary-org
