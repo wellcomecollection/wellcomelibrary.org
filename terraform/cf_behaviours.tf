@@ -1,5 +1,5 @@
 locals {
-  moh_paths = ["moh/*", "spas/*", "assets/*", "plugins/*", "scripts/*", "timelines/*"]
+  moh_paths = ["moh", "moh/*", "spas/*", "assets/*", "plugins/*", "scripts/*", "timelines/*"]
 
   moh_behaviours = [
     for path in local.moh_paths :
